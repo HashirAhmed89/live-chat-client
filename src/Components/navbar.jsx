@@ -1,9 +1,3 @@
-const templateImages = import.meta.glob('../assets copy/images/**/*', {
-  eager: true,
-  import: 'default',
-  query: '?url',
-})
-
 const Navbar = () => {
   return (
     <>
@@ -646,7 +640,7 @@ const Navbar = () => {
                         >
                           <div className="mb-4 rounded-3 border">
                             <img
-                              src={templateImages['../assets copy/images/banner/mockup.png']}
+                              src={new URL('../assets copy/images/banner/mockup.png', import.meta.url).href}
                               alt=""
                               className="img-fluid rounded-3"
                             />
@@ -724,7 +718,7 @@ const Navbar = () => {
                             <div className="col-lg-6">
                               <div className="nxl-mega-menu-image">
                                 <img
-                                  src={templateImages['../assets copy/images/general/full-avatar.png']}
+                                  src={new URL('../assets copy/images/general/full-avatar.png', import.meta.url).href}
                                   alt=""
                                   className="img-fluid full-user-avtar"
                                 />
@@ -784,7 +778,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/app-store.png']}
+                                    src={new URL('../assets copy/images/brand/app-store.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -800,7 +794,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/spotify.png']}
+                                    src={new URL('../assets copy/images/brand/spotify.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -816,7 +810,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/figma.png']}
+                                    src={new URL('../assets copy/images/brand/figma.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -832,7 +826,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/shopify.png']}
+                                    src={new URL('../assets copy/images/brand/shopify.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -848,7 +842,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/paypal.png']}
+                                    src={new URL('../assets copy/images/brand/paypal.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -866,7 +860,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/gmail.png']}
+                                    src={new URL('../assets copy/images/brand/gmail.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -882,7 +876,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/dropbox.png']}
+                                    src={new URL('../assets copy/images/brand/dropbox.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -898,7 +892,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/google-drive.png']}
+                                    src={new URL('../assets copy/images/brand/google-drive.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -916,7 +910,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/github.png']}
+                                    src={new URL('../assets copy/images/brand/github.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -932,7 +926,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/gitlab.png']}
+                                    src={new URL('../assets copy/images/brand/gitlab.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -950,7 +944,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/facebook.png']}
+                                    src={new URL('../assets copy/images/brand/facebook.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -966,7 +960,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/pinterest.png']}
+                                    src={new URL('../assets copy/images/brand/pinterest.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -982,7 +976,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/instagram.png']}
+                                    src={new URL('../assets copy/images/brand/instagram.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -998,7 +992,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/twitter.png']}
+                                    src={new URL('../assets copy/images/brand/twitter.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -1014,7 +1008,7 @@ const Navbar = () => {
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={templateImages['../assets copy/images/brand/youtube.png']}
+                                    src={new URL('../assets copy/images/brand/youtube.png', import.meta.url).href}
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -1173,7 +1167,7 @@ const Navbar = () => {
                             <div className="col-xl-4">
                               <div className="nxl-mega-menu-image">
                                 <img
-                                  src={templateImages['../assets copy/images/banner/1.jpg']}
+                                  src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                   alt=""
                                   className="img-fluid"
                                 />
@@ -1384,7 +1378,7 @@ const Navbar = () => {
                                   <div className="carousel-item active">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/6.jpg']}
+                                        src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1402,7 +1396,7 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/5.jpg']}
+                                        src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1420,7 +1414,7 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/4.jpg']}
+                                        src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1438,7 +1432,7 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/3.jpg']}
+                                        src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1456,7 +1450,7 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/2.jpg']}
+                                        src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1474,7 +1468,7 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={templateImages['../assets copy/images/banner/1.jpg']}
+                                        src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1644,7 +1638,7 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/1.jpg']}
+                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
@@ -1664,7 +1658,7 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={templateImages['../assets copy/images/avatar/1.png']}
+                                                src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
                                                 alt=""
                                                 className="img-fluid"
                                               />
@@ -1683,7 +1677,7 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/2.jpg']}
+                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
@@ -1703,7 +1697,7 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={templateImages['../assets copy/images/avatar/2.png']}
+                                                src={new URL('../assets copy/images/avatar/2.png', import.meta.url).href}
                                                 alt=""
                                                 className="img-fluid"
                                               />
@@ -1722,7 +1716,7 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/3.jpg']}
+                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
@@ -1742,7 +1736,7 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={templateImages['../assets copy/images/avatar/3.png']}
+                                                src={new URL('../assets copy/images/avatar/3.png', import.meta.url).href}
                                                 alt=""
                                                 className="img-fluid"
                                               />
@@ -1761,7 +1755,7 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/4.jpg']}
+                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
@@ -1781,7 +1775,7 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={templateImages['../assets copy/images/avatar/4.png']}
+                                                src={new URL('../assets copy/images/avatar/4.png', import.meta.url).href}
                                                 alt=""
                                                 className="img-fluid"
                                               />
@@ -1992,7 +1986,7 @@ const Navbar = () => {
                                       <div className="carousel-item active">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/6.jpg']}
+                                            src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2010,7 +2004,7 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/5.jpg']}
+                                            src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2028,7 +2022,7 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/4.jpg']}
+                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2046,7 +2040,7 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/3.jpg']}
+                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2064,7 +2058,7 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/2.jpg']}
+                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2082,7 +2076,7 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/1.jpg']}
+                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2263,7 +2257,7 @@ const Navbar = () => {
                                 <div className="col-xxl-3 offset-xxl-1 col-xl-4">
                                   <div className="nxl-mega-menu-image">
                                     <img
-                                      src={templateImages['../assets copy/images/banner/1.jpg']}
+                                      src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                       alt=""
                                       className="img-fluid"
                                     />
@@ -2332,7 +2326,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/1.jpg']}
+                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2359,7 +2353,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/2.jpg']}
+                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2386,7 +2380,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/3.jpg']}
+                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2413,7 +2407,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/4.jpg']}
+                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2440,7 +2434,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/5.jpg']}
+                                            src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2467,7 +2461,7 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={templateImages['../assets copy/images/banner/6.jpg']}
+                                            src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
@@ -2729,7 +2723,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image rounded">
                             <img
-                              src={templateImages['../assets copy/images/avatar/1.png']}
+                              src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2757,7 +2751,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image rounded">
                             <img
-                              src={templateImages['../assets copy/images/avatar/2.png']}
+                              src={new URL('../assets copy/images/avatar/2.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2785,7 +2779,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image rounded">
                             <img
-                              src={templateImages['../assets copy/images/avatar/3.png']}
+                              src={new URL('../assets copy/images/avatar/3.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2813,7 +2807,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image rounded">
                             <img
-                              src={templateImages['../assets copy/images/avatar/4.png']}
+                              src={new URL('../assets copy/images/avatar/4.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2841,7 +2835,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image rounded">
                             <img
-                              src={templateImages['../assets copy/images/avatar/5.png']}
+                              src={new URL('../assets copy/images/avatar/5.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2878,7 +2872,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image bg-gray-200 rounded">
                             <img
-                              src={templateImages['../assets copy/images/file-icons/css.png']}
+                              src={new URL('../assets copy/images/file-icons/css.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2904,7 +2898,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image bg-gray-200 rounded">
                             <img
-                              src={templateImages['../assets copy/images/file-icons/zip.png']}
+                              src={new URL('../assets copy/images/file-icons/zip.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2930,7 +2924,7 @@ const Navbar = () => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="avatar-image bg-gray-200 rounded">
                             <img
-                              src={templateImages['../assets copy/images/file-icons/pdf.png']}
+                              src={new URL('../assets copy/images/file-icons/pdf.png', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -2971,7 +2965,7 @@ const Navbar = () => {
                   data-bs-auto-close="outside"
                 >
                   <img
-                    src="assets/vendors/img/flags/4x3/us.svg"
+                    src={new URL('../assets copy/vendors/img/flags/4x3/us.svg', import.meta.url).href}
                     alt=""
                     className="img-fluid wd-20"
                   />
@@ -3004,7 +2998,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/sa.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/sa.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3019,7 +3013,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/bd.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/bd.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3034,7 +3028,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/ch.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/ch.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3049,7 +3043,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/nl.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/nl.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3064,7 +3058,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/us.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/us.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3079,7 +3073,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/fr.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/fr.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3094,7 +3088,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/de.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/de.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3109,7 +3103,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/in.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/in.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3124,7 +3118,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/ru.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/ru.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3139,7 +3133,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/es.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/es.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3154,7 +3148,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/tr.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/tr.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3169,7 +3163,7 @@ const Navbar = () => {
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src="assets/vendors/img/flags/1x1/pk.svg"
+                              src={new URL('../assets copy/vendors/img/flags/1x1/pk.svg', import.meta.url).href}
                               alt=""
                               className="img-fluid"
                             />
@@ -3278,7 +3272,7 @@ const Navbar = () => {
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={templateImages['../assets copy/images/avatar/2.png']}
+                      src={new URL('../assets copy/images/avatar/2.png', import.meta.url).href}
                       alt=""
                       className="rounded me-3 border"
                     />
@@ -3318,7 +3312,7 @@ const Navbar = () => {
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={templateImages['../assets copy/images/avatar/3.png']}
+                      src={new URL('../assets copy/images/avatar/3.png', import.meta.url).href}
                       alt=""
                       className="rounded me-3 border"
                     />
@@ -3358,7 +3352,7 @@ const Navbar = () => {
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={templateImages['../assets copy/images/avatar/4.png']}
+                      src={new URL('../assets copy/images/avatar/4.png', import.meta.url).href}
                       alt=""
                       className="rounded me-3 border"
                     />
@@ -3414,7 +3408,7 @@ const Navbar = () => {
                   data-bs-auto-close="outside"
                 >
                   <img
-                    src={templateImages['../assets copy/images/avatar/1.png']}
+                    src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
                     alt="user-image"
                     className="img-fluid user-avtar me-0"
                   />
@@ -3423,7 +3417,7 @@ const Navbar = () => {
                   <div className="dropdown-header">
                     <div className="d-flex align-items-center">
                       <img
-                        src={templateImages['../assets copy/images/avatar/1.png']}
+                        src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
                         alt="user-image"
                         className="img-fluid user-avtar"
                       />
