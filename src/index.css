@@ -17,3 +17,53 @@
 .sidebar-layout.sidebar-closed .nxl-header {
   left: 0;
 }
+
+.bytes-chat-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  color: #202b3c;
+  text-decoration: none;
+}
+
+.bytes-chat-brand:hover,
+.bytes-chat-brand:focus {
+  color: #202b3c;
+  text-decoration: none;
+}
+
+.bytes-chat-brand__icon {
+  display: inline-flex;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #356df3, #6449df);
+  color: #fff;
+  box-shadow: 0 4px 10px rgb(72 91 227 / 22%);
+}
+
+.bytes-chat-brand__icon svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+.bytes-chat-brand__name {
+  overflow: hidden;
+  color: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bytes-chat-brand--collapsed .bytes-chat-brand__name,
+html.minimenu .bytes-chat-brand__name {
+  display: none;
+}

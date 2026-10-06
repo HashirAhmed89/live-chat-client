@@ -10,8 +10,8 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
           {/* <!--! [Start] Header Left !--> */}
           <div className="header-left d-flex align-items-center gap-4">
             {/* <!--! [Start] nxl-head-mobile-toggler !--> */}
-            <a
-              href="#"
+            <Link
+              to="#"
               className="nxl-head-mobile-toggler"
               id="mobile-collapse"
               onClick={(event) => {
@@ -24,12 +24,12 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                   <div className="hamburger-inner"></div>
                 </div>
               </div>
-            </a>
+            </Link>
             {/* <!--! [Start] nxl-head-mobile-toggler !-->
                 <!--! [Start] nxl-navigation-toggle !--> */}
             <div className="nxl-navigation-toggle">
-              <a
-                href="#"
+              <Link
+                to="#"
                 id="menu-mini-button"
                 style={{ display: isSidebarOpen ? undefined : "none" }}
                 onClick={(event) => {
@@ -38,9 +38,9 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                 }}
               >
                 <i className="feather-align-left"></i>
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="#"
                 id="menu-expend-button"
                 style={{ display: isSidebarOpen ? "none" : undefined }}
                 onClick={(event) => {
@@ -49,7 +49,7 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                 }}
               >
                 <i className="feather-arrow-right"></i>
-              </a>
+              </Link>
             </div>
             {/* <!--! [End] nxl-navigation-toggle !-->
                 <!--! [Start] nxl-lavel-mega-menu-toggle !--> */}

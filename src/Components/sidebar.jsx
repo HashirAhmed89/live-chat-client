@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logoFull from "../assets copy/images/logo-full.png";
-import logoAbbr from "../assets copy/images/logo-abbr.png";
 
 const Sidebar = ({ isOpen = true }) => {
   const [openMenus, setOpenMenus] = useState({});
@@ -18,10 +16,28 @@ const Sidebar = ({ isOpen = true }) => {
       >
         <div className="navbar-wrapper">
           <div className="m-header">
-            <Link to="/" className="b-brand">
-              {/* <!-- ========   change your logo hear   ============ --> */}
-              <img src={logoFull} alt="" className="logo logo-lg" />
-              <img src={logoAbbr} alt="" className="logo logo-sm" />
+            <Link
+              to="/"
+              className={`b-brand bytes-chat-brand${isOpen ? "" : " bytes-chat-brand--collapsed"}`}
+              aria-label="Bytes Chat"
+              title="Bytes Chat"
+            >
+              <span className="bytes-chat-brand__icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8 8 0 0 1-7.1 4.2 8.38 8.38 0 0 1-3.8-.9L3 21l2.4-6.2a8.38 8.38 0 0 1-.9-3.8 8 8 0 0 1 4.2-7.1 8.38 8.38 0 0 1 3.8-.9h.5a8 8 0 0 1 8 8z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <span className="bytes-chat-brand__name">Bytes Chat</span>
             </Link>
           </div>
           <div className="navbar-content">
