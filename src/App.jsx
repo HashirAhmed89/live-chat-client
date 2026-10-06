@@ -1,15 +1,75 @@
-import { useEffect } from 'react'
-import Navbar from './Components/navbar'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Mainlayout from "./layouts/mainlayout";
+import Chat from "./pages/chat";
+import Email from "./pages/email";
+import Notes from "./pages/notes";
+import Tasks from "./pages/task";
+import Calendar from "./pages/calendar";
+import Contacts from "./pages/contacts";
+import Storage from "./pages/storage";
 
-const App = () => {
-  useEffect(() => {
-    void (async () => {
-      await import('./assets copy/vendors/js/nxlNavigation.min.js')
-      await import('./assets copy/js/common-init.min.js')
-    })()
-  }, [])
 
-  return <Navbar />
-}
+// const navigationPages = [
+//   { path: "/reports-sales", title: "Sales Report" },
+//   { path: "/reports-leads", title: "Leads Report" },
+//   { path: "/reports-project", title: "Project Report" },
+//   { path: "/reports-timesheets", title: "Timesheets Report" },
+//   { path: "/proposal", title: "Proposal" },
+//   { path: "/proposal-view", title: "Proposal View" },
+//   { path: "/proposal-edit", title: "Proposal Edit" },
+//   { path: "/proposal-create", title: "Proposal Create" },
+//   { path: "/payment", title: "Payment" },
+//   { path: "/invoice-view", title: "Invoice View" },
+//   { path: "/invoice-create", title: "Invoice Create" },
+//   { path: "/customers", title: "Customers" },
+//   { path: "/customers-view", title: "Customers View" },
+//   { path: "/customers-create", title: "Customers Create" },
+//   { path: "/leads", title: "Leads" },
+//   { path: "/leads-view", title: "Leads View" },
+//   { path: "/leads-create", title: "Leads Create" },
+//   { path: "/projects", title: "Projects" },
+//   { path: "/projects-view", title: "Projects View" },
+//   { path: "/projects-create", title: "Projects Create" },
+//   { path: "/widgets-lists", title: "Lists" },
+//   { path: "/widgets-tables", title: "Tables" },
+//   { path: "/widgets-charts", title: "Charts" },
+//   { path: "/widgets-statistics", title: "Statistics" },
+//   { path: "/auth-login-cover", title: "Login" },
+//   { path: "/auth-login-minimal", title: "Login" },
+//   { path: "/auth-login-creative", title: "Login" },
+//   { path: "/auth-register-cover", title: "Register" },
+//   { path: "/auth-register-minimal", title: "Register" },
+//   { path: "/auth-register-creative", title: "Register" },
+//   { path: "/auth-404-cover", title: "Error 404" },
+//   { path: "/auth-404-minimal", title: "Error 404" },
+//   { path: "/auth-404-creative", title: "Error 404" },
+//   { path: "/auth-reset-cover", title: "Reset Password" },
+//   { path: "/auth-reset-minimal", title: "Reset Password" },
+//   { path: "/auth-reset-creative", title: "Reset Password" },
+//   { path: "/auth-verify-cover", title: "Verify OTP" },
+//   { path: "/auth-verify-minimal", title: "Verify OTP" },
+//   { path: "/auth-verify-creative", title: "Verify OTP" },
+//   { path: "/auth-maintenance-cover", title: "Maintenance" },
+//   { path: "/auth-maintenance-minimal", title: "Maintenance" },
+//   { path: "/auth-maintenance-creative", title: "Maintenance" },
+// ];
+ 
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route element={<Mainlayout />}>
+        <Route path="/" element={<div><h1>Home Page</h1></div>} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/email" element={<Email />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/storage" element={<Storage />} />
+       
+      </Route>
+    </Routes>
+  </BrowserRouter>
+);
 
-export default App
+export default App;

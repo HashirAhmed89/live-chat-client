@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import "../assets copy/vendors/js/nxlNavigation.min.js";
+import "../assets copy/js/common-init.min.js";
 const Navbar = () => {
   return (
     <>
@@ -6,8 +9,8 @@ const Navbar = () => {
           {/* <!--! [Start] Header Left !--> */}
           <div className="header-left d-flex align-items-center gap-4">
             {/* <!--! [Start] nxl-head-mobile-toggler !--> */}
-            <a
-              href="javascript:void(0);"
+            <Link
+              to="javascript:void(0);"
               className="nxl-head-mobile-toggler"
               id="mobile-collapse"
             >
@@ -16,289 +19,305 @@ const Navbar = () => {
                   <div className="hamburger-inner"></div>
                 </div>
               </div>
-            </a>
+            </Link>
             {/* <!--! [Start] nxl-head-mobile-toggler !-->
                 <!--! [Start] nxl-navigation-toggle !--> */}
             <div className="nxl-navigation-toggle">
-              <a href="javascript:void(0);" id="menu-mini-button">
+              <Link to="javascript:void(0);" id="menu-mini-button">
                 <i className="feather-align-left"></i>
-              </a>
-              <a
-                href="javascript:void(0);"
+              </Link>
+              <Link
+                to="javascript:void(0);"
                 id="menu-expend-button"
                 style={{ display: "none" }}
               >
                 <i className="feather-arrow-right"></i>
-              </a>
+              </Link>
             </div>
             {/* <!--! [End] nxl-navigation-toggle !-->
                 <!--! [Start] nxl-lavel-mega-menu-toggle !--> */}
             <div className="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
-              <a href="javascript:void(0);" id="nxl-lavel-mega-menu-open">
+              <Link to="javascript:void(0);" id="nxl-lavel-mega-menu-open">
                 <i className="feather-align-left"></i>
-              </a>
+              </Link>
             </div>
             {/* <!--! [End] nxl-lavel-mega-menu-toggle !-->
                 <!--! [Start] nxl-lavel-mega-menu !--> */}
             <div className="nxl-drp-link nxl-lavel-mega-menu">
               <div className="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
-                <a href="javascript:void(0)" id="nxl-lavel-mega-menu-hide">
+                <Link to="javascript:void(0)" id="nxl-lavel-mega-menu-hide">
                   <i className="feather-arrow-left me-2"></i>
                   <span>Back</span>
-                </a>
+                </Link>
               </div>
               {/* <!--! [Start] nxl-lavel-mega-menu-wrapper !--> */}
               <div className="nxl-lavel-mega-menu-wrapper d-flex gap-3">
                 {/* <!--! [Start] nxl-lavel-menu !--> */}
                 <div className="dropdown nxl-h-item nxl-lavel-menu">
-                  <a
-                    href="javascript:void(0);"
+                  <Link
+                    to="javascript:void(0);"
                     className="avatar-text avatar-md bg-primary text-white"
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="outside"
                   >
                     <i className="feather-plus"></i>
-                  </a>
+                  </Link>
                   <div className="dropdown-menu nxl-h-dropdown">
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-send"></i>
-                          <span>Applications</span>
+                          <span>applications</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="apps-chat.html" className="dropdown-item">
+                        <Link to="/chat" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Chat</span>
-                        </a>
-                        <a href="apps-email.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/email" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Email</span>
-                        </a>
-                        <a href="apps-tasks.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/tasks" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Tasks</span>
-                        </a>
-                        <a href="apps-notes.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/notes" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Notes</span>
-                        </a>
-                        <a href="apps-storage.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/storage" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Storage</span>
-                        </a>
-                        <a href="apps-calendar.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/calendar" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Calendar</span>
-                        </a>
+                        </Link>
+                        <Link to="/contacts" className="dropdown-item">
+                          <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
+                          <span>Contacts</span>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown-divider"></div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-cast"></i>
                           <span>Reports</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="reports-sales.html" className="dropdown-item">
+                        <Link to="/reports-sales" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Sales Report</span>
-                        </a>
-                        <a href="reports-leads.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/reports-leads" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Leads Report</span>
-                        </a>
-                        <a
-                          href="reports-project.html"
+                        </Link>
+                        <Link
+                          to="/reports-project"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Project Report</span>
-                        </a>
-                        <a
-                          href="reports-timesheets.html"
+                        </Link>
+                        <Link
+                          to="/reports-timesheets"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Timesheets Report</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-at-sign"></i>
                           <span>Proposal</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="proposal.html" className="dropdown-item">
+                        <Link to="/proposal" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal</span>
-                        </a>
-                        <a href="proposal-view.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/proposal-view" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal View</span>
-                        </a>
-                        <a href="proposal-edit.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/proposal-edit" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal Edit</span>
-                        </a>
-                        <a
-                          href="proposal-create.html"
+                        </Link>
+                        <Link
+                          to="/proposal-create"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal Create</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-dollar-sign"></i>
                           <span>Payment</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="payment.html" className="dropdown-item">
+                        <Link to="/payment" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Payment</span>
-                        </a>
-                        <a href="invoice-view.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/invoice-view" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Invoice View</span>
-                        </a>
-                        <a href="invoice-create.html" className="dropdown-item">
+                        </Link>
+                        <Link
+                          to="/invoice-create"
+                          className="dropdown-item"
+                        >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Invoice Create</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-users"></i>
                           <span>Customers</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="customers.html" className="dropdown-item">
+                        <Link to="/customers" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers</span>
-                        </a>
-                        <a href="customers-view.html" className="dropdown-item">
+                        </Link>
+                        <Link
+                          to="/customers-view"
+                          className="dropdown-item"
+                        >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers View</span>
-                        </a>
-                        <a
-                          href="customers-create.html"
+                        </Link>
+                        <Link
+                          to="/customers-create"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers Create</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-alert-circle"></i>
                           <span>Leads</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="leads.html" className="dropdown-item">
+                        <Link to="/leads" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Leads</span>
-                        </a>
-                        <a href="leads-view.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/leads-view" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Leads View</span>
-                        </a>
-                        <a href="leads-create.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/leads-create" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Leads Create</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-briefcase"></i>
                           <span>Projects</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="projects.html" className="dropdown-item">
+                        <Link to="/projects" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Projects</span>
-                        </a>
-                        <a href="projects-view.html" className="dropdown-item">
+                        </Link>
+                        <Link to="/projects-view" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Projects View</span>
-                        </a>
-                        <a
-                          href="projects-create.html"
+                        </Link>
+                        <Link
+                          to="/projects-create"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Projects Create</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-layout"></i>
                           <span>Widgets</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
-                        <a href="widgets-lists.html" className="dropdown-item">
+                        <Link to="/widgets-lists" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Lists</span>
-                        </a>
-                        <a href="widgets-tables.html" className="dropdown-item">
+                        </Link>
+                        <Link
+                          to="/widgets-tables"
+                          className="dropdown-item"
+                        >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Tables</span>
-                        </a>
-                        <a href="widgets-charts.html" className="dropdown-item">
+                        </Link>
+                        <Link
+                          to="/widgets-charts"
+                          className="dropdown-item"
+                        >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Charts</span>
-                        </a>
-                        <a
-                          href="widgets-statistics.html"
+                        </Link>
+                        <Link
+                          to="/widgets-statistics"
                           className="dropdown-item"
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Statistics</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="dropdown nxl-level-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="feather-power"></i>
-                          <span>Authentication</span>
+                          <span>authentication</span>
                         </span>
                         <i className="feather-chevron-right ms-auto me-0"></i>
-                      </a>
+                      </Link>
                       <div className="dropdown-menu nxl-h-dropdown">
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -306,34 +325,34 @@ const Navbar = () => {
                               <span>Login</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-login-cover.html"
+                            <Link
+                              to="/auth-login-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-login-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-login-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-login-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-login-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -341,34 +360,34 @@ const Navbar = () => {
                               <span>Register</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-register-cover.html"
+                            <Link
+                              to="/auth-register-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-register-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-register-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-register-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-register-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -376,34 +395,34 @@ const Navbar = () => {
                               <span>Error-404</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-404-cover.html"
+                            <Link
+                              to="/auth-404-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-404-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-404-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-404-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-404-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -411,34 +430,34 @@ const Navbar = () => {
                               <span>Reset Pass</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-reset-cover.html"
+                            <Link
+                              to="/auth-reset-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-reset-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-reset-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-reset-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-reset-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -446,34 +465,34 @@ const Navbar = () => {
                               <span>Verify OTP</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-verify-cover.html"
+                            <Link
+                              to="/auth-verify-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-verify-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-verify-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-verify-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-verify-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="dropdown nxl-level-menu">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="dropdown-item"
                           >
                             <span className="hstack">
@@ -481,52 +500,52 @@ const Navbar = () => {
                               <span>Maintenance</span>
                             </span>
                             <i className="feather-chevron-right ms-auto me-0"></i>
-                          </a>
+                          </Link>
                           <div className="dropdown-menu nxl-h-dropdown">
-                            <a
-                              href="./auth-maintenance-cover.html"
+                            <Link
+                              to="/auth-maintenance-cover"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Cover</span>
-                            </a>
-                            <a
-                              href="./auth-maintenance-minimal.html"
+                            </Link>
+                            <Link
+                              to="/auth-maintenance-minimal"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Minimal</span>
-                            </a>
-                            <a
-                              href="./auth-maintenance-creative.html"
+                            </Link>
+                            <Link
+                              to="/auth-maintenance-creative"
                               className="dropdown-item"
                             >
                               <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                               <span>Creative</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="dropdown-divider"></div>
-                    <a href="javascript:void(0);" className="dropdown-item">
+                    <Link to="javascript:void(0);" className="dropdown-item">
                       <i className="feather-plus"></i>
-                      <span>Add New Items</span>
-                    </a>
+                      <span>add New Items</span>
+                    </Link>
                   </div>
                 </div>
                 {/* <!--! [End] nxl-lavel-menu !-->
                         <!--! [Start] nxl-h-item nxl-mega-menu !--> */}
                 <div className="dropdown nxl-h-item nxl-mega-menu">
-                  <a
-                    href="javascript:void(0);"
+                  <Link
+                    to="javascript:void(0);"
                     className="btn btn-light-brand"
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="outside"
                   >
                     {" "}
                     Mega Menu{" "}
-                  </a>
+                  </Link>
                   <div
                     className="dropdown-menu nxl-h-dropdown"
                     id="mega-menu-dropdown"
@@ -563,7 +582,7 @@ const Navbar = () => {
                           <span className="menu-icon">
                             <i className="feather-send"></i>
                           </span>
-                          <span className="menu-title">Applications</span>
+                          <span className="menu-title">applications</span>
                           <span className="menu-arrow">
                             <i className="feather-chevron-right"></i>
                           </span>
@@ -608,7 +627,7 @@ const Navbar = () => {
                           <span className="menu-icon">
                             <i className="feather-cpu"></i>
                           </span>
-                          <span className="menu-title">Authentication</span>
+                          <span className="menu-title">authentication</span>
                           <span className="menu-arrow">
                             <i className="feather-chevron-right"></i>
                           </span>
@@ -640,25 +659,30 @@ const Navbar = () => {
                         >
                           <div className="mb-4 rounded-3 border">
                             <img
-                              src={new URL('../assets copy/images/banner/mockup.png', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/images/banner/mockup.png",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid rounded-3"
                             />
                           </div>
                           <h6 className="fw-bolder">
-                            Duralux - Admin Dashboard UiKit
+                            Duralux - admin Dashboard UiKit
                           </h6>
                           <p className="fs-12 fw-normal text-muted text-truncate-3-line">
                             Get started Duralux with Duralux up and running.
                             Duralux bootstrap template docs helps you to get
                             started with simple html codes.
                           </p>
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="fs-13 fw-bold text-primary"
                           >
                             Get Started &rarr;
-                          </a>
+                          </Link>
                         </div>
                         {/* <!--! [End] v-pills-general !-->
                                         <!--! [Start] v-pills-applications !--> */}
@@ -670,55 +694,67 @@ const Navbar = () => {
                           <div className="row g-4">
                             <div className="col-lg-6">
                               <h6 className="dropdown-item-title">
-                                Applications
+                                applications
                               </h6>
-                              <a
-                                href="apps-chat.html"
+                              <Link
+                                to="/chat"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Chat</span>
-                              </a>
-                              <a
-                                href="apps-email.html"
+                              </Link>
+                              <Link
+                                to="/email"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Email</span>
-                              </a>
-                              <a
-                                href="apps-tasks.html"
+                              </Link>
+                              <Link
+                                to="/tasks"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Tasks</span>
-                              </a>
-                              <a
-                                href="apps-notes.html"
+                              </Link>
+                              <Link
+                                to="/notes"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Notes</span>
-                              </a>
-                              <a
-                                href="apps-storage.html"
+                              </Link>
+                              <Link
+                                to="/storage"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Storage</span>
-                              </a>
-                              <a
-                                href="apps-calendar.html"
+                              </Link>
+                              <Link
+                                to="/calendar"
                                 className="dropdown-item"
                               >
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Calendar</span>
-                              </a>
+                              </Link>
+                              <Link
+                                to="/contacts"
+                                className="dropdown-item"
+                              >
+                                <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
+                                <span>Contacts</span>
+                              </Link>
                             </div>
                             <div className="col-lg-6">
                               <div className="nxl-mega-menu-image">
                                 <img
-                                  src={new URL('../assets copy/images/general/full-avatar.png', import.meta.url).href}
+                                  src={
+                                    new URL(
+                                      "../assets copy/images/general/full-avatar.png",
+                                      import.meta.url,
+                                    ).href
+                                  }
                                   alt=""
                                   className="img-fluid full-user-avtar"
                                 />
@@ -736,12 +772,12 @@ const Navbar = () => {
                               </p>
                             </div>
                             <div className="mt-2 mt-lg-0">
-                              <a
-                                href="mailto:flexilecode@gmail.com"
+                              <Link
+                                to="mailto:flexilecode@gmail.com"
                                 className="fs-13 fw-bold text-primary"
                               >
                                 Contact Us &rarr;
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -763,38 +799,48 @@ const Navbar = () => {
                                 </p>
                               </div>
                               <div className="mt-2 mt-lg-0">
-                                <a
-                                  href="javascript:void(0);"
+                                <Link
+                                  to="javascript:void(0);"
                                   className="fs-13 text-primary"
                                 >
-                                  Add New &rarr;
-                                </a>
+                                  add New &rarr;
+                                </Link>
                               </div>
                             </div>
                             <div className="col-lg-4">
-                              <a
-                                href="javascript:void(0);"
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/app-store.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/app-store.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
                                 </div>
-                                <div className="menu-item-title">App Store</div>
+                                <div className="menu-item-title">app Store</div>
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/spotify.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/spotify.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -803,14 +849,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/figma.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/figma.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -819,14 +870,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/shopify.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/shopify.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -835,14 +891,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/paypal.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/paypal.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -851,16 +912,21 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                             <div className="col-lg-4">
-                              <a
-                                href="javascript:void(0);"
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/gmail.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/gmail.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -869,14 +935,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/dropbox.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/dropbox.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -885,14 +956,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/google-drive.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/google-drive.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -903,14 +979,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/github.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/github.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -919,14 +1000,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/gitlab.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/gitlab.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -935,16 +1021,21 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                             <div className="col-lg-4">
-                              <a
-                                href="javascript:void(0);"
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/facebook.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/facebook.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -953,14 +1044,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/pinterest.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/pinterest.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -969,14 +1065,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/instagram.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/instagram.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -985,14 +1086,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/twitter.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/twitter.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -1001,14 +1107,19 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
-                              <a
-                                href="javascript:void(0);"
+                              </Link>
+                              <Link
+                                to="javascript:void(0);"
                                 className="dropdown-item"
                               >
                                 <div className="menu-item-icon">
                                   <img
-                                    src={new URL('../assets copy/images/brand/youtube.png', import.meta.url).href}
+                                    src={
+                                      new URL(
+                                        "../assets copy/images/brand/youtube.png",
+                                        import.meta.url,
+                                      ).href
+                                    }
                                     alt=""
                                     className="img-fluid"
                                   />
@@ -1017,18 +1128,18 @@ const Navbar = () => {
                                 <div className="menu-item-arrow">
                                   <i className="feather-arrow-right"></i>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <hr className="border-top-dashed" />
                           <p className="fs-13 text-muted mb-0">
                             Need help? Contact our{" "}
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="fst-italic"
                             >
                               support center
-                            </a>
+                            </Link>
                           </p>
                         </div>
                         {/* <!--! [End] v-pills-integrations !-->
@@ -1045,140 +1156,145 @@ const Navbar = () => {
                                   <h6 className="dropdown-item-title">
                                     Navigation
                                   </h6>
-                                  <a
-                                    href="javascript:void(0);"
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     CRM
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
-                                    Analytics
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                    analytics
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Sales
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Leads
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Projects
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Timesheets
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-lg-4">
                                   <h6 className="dropdown-item-title">Pages</h6>
-                                  <a
-                                    href="javascript:void(0);"
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Leads{" "}
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Payments
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Projects
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Proposals
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Customers
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Documentations
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-lg-4">
                                   <h6 className="dropdown-item-title">
-                                    Authentication
+                                    authentication
                                   </h6>
-                                  <a
-                                    href="javascript:void(0);"
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Login
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Regiser
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Error-404
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Reset Pass
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Verify OTP
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Maintenance
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
                             </div>
                             <div className="col-xl-4">
                               <div className="nxl-mega-menu-image">
                                 <img
-                                  src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                  src={
+                                    new URL(
+                                      "../assets copy/images/banner/1.jpg",
+                                      import.meta.url,
+                                    ).href
+                                  }
                                   alt=""
                                   className="img-fluid"
                                 />
                               </div>
                               <div className="mt-4">
-                                <a
-                                  href="mailto:flexilecode@gmail.com"
+                                <Link
+                                  to="mailto:flexilecode@gmail.com"
                                   className="fs-13 fw-bold"
                                 >
                                   View all resources on Duralux &rarr;
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>
@@ -1195,142 +1311,142 @@ const Navbar = () => {
                               <div className="row g-4">
                                 <div className="col-lg-4">
                                   <h6 className="dropdown-item-title">Cover</h6>
-                                  <a
-                                    href="./auth-login-cover.html"
+                                  <Link
+                                    to="/auth-login-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Login</span>
-                                  </a>
-                                  <a
-                                    href="./auth-register-cover.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-register-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Register</span>
-                                  </a>
-                                  <a
-                                    href="./auth-404-cover.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-404-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Error-404</span>
-                                  </a>
-                                  <a
-                                    href="./auth-reset-cover.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-reset-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Reset Pass</span>
-                                  </a>
-                                  <a
-                                    href="./auth-verify-cover.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-verify-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Verify OTP</span>
-                                  </a>
-                                  <a
-                                    href="./auth-maintenance-cover.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-maintenance-cover"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Maintenance</span>
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-lg-4">
                                   <h6 className="dropdown-item-title">
                                     Minimal
                                   </h6>
-                                  <a
-                                    href="./auth-login-minimal.html"
+                                  <Link
+                                    to="/auth-login-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Login</span>
-                                  </a>
-                                  <a
-                                    href="./auth-register-minimal.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-register-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Register</span>
-                                  </a>
-                                  <a
-                                    href="./auth-404-minimal.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-404-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Error-404</span>
-                                  </a>
-                                  <a
-                                    href="./auth-reset-minimal.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-reset-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Reset Pass</span>
-                                  </a>
-                                  <a
-                                    href="./auth-verify-minimal.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-verify-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Verify OTP</span>
-                                  </a>
-                                  <a
-                                    href="./auth-maintenance-minimal.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-maintenance-minimal"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Maintenance</span>
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-lg-4">
                                   <h6 className="dropdown-item-title">
                                     Creative
                                   </h6>
-                                  <a
-                                    href="./auth-login-creative.html"
+                                  <Link
+                                    to="/auth-login-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Login</span>
-                                  </a>
-                                  <a
-                                    href="./auth-register-creative.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-register-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Register</span>
-                                  </a>
-                                  <a
-                                    href="./auth-404-creative.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-404-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Error-404</span>
-                                  </a>
-                                  <a
-                                    href="./auth-reset-creative.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-reset-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Reset Pass</span>
-                                  </a>
-                                  <a
-                                    href="./auth-verify-creative.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-verify-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Verify OTP</span>
-                                  </a>
-                                  <a
-                                    href="./auth-maintenance-creative.html"
+                                  </Link>
+                                  <Link
+                                    to="/auth-maintenance-creative"
                                     className="dropdown-item"
                                   >
                                     <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                     <span>Maintenance</span>
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
                             </div>
@@ -1378,7 +1494,12 @@ const Navbar = () => {
                                   <div className="carousel-item active">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/6.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1396,14 +1517,19 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/5.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
                                     </div>
                                     <div className="carousel-caption">
                                       <h5 className="carousel-caption-title text-truncate-1-line">
-                                        iOS Apps Development
+                                        iOS apps Development
                                       </h5>
                                       <p className="carousel-caption-desc">
                                         Some representative placeholder content
@@ -1414,7 +1540,12 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/4.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1432,7 +1563,12 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/3.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1450,7 +1586,12 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/2.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1468,7 +1609,12 @@ const Navbar = () => {
                                   <div className="carousel-item">
                                     <div className="nxl-mega-menu-image">
                                       <img
-                                        src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                        src={
+                                          new URL(
+                                            "../assets copy/images/banner/1.jpg",
+                                            import.meta.url,
+                                          ).href
+                                        }
                                         alt=""
                                         className="img-fluid d-block w-100"
                                       />
@@ -1595,42 +1741,42 @@ const Navbar = () => {
                                   <h6 className="dropdown-item-title">
                                     Categories
                                   </h6>
-                                  <a
-                                    href="javascript:void(0);"
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Support
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Services
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
-                                    Applicatios
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                    applicatios
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     eCommerce
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Development
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Miscellaneous
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-xxl-10">
                                   <div className="row g-4">
@@ -1638,17 +1784,22 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/1.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
                                         </div>
                                         <div className="mt-3 mt-lg-0 ms-lg-3 item-text">
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Shopify eCommerce Store
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet,
                                             consectetur adipisicing elit. Sint
@@ -1658,17 +1809,22 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
+                                                src={
+                                                  new URL(
+                                                    "../assets copy/images/avatar/1.png",
+                                                    import.meta.url,
+                                                  ).href
+                                                }
                                                 alt=""
                                                 className="img-fluid"
                                               />
                                             </div>
-                                            <a
-                                              href="javascript:void(0);"
+                                            <Link
+                                              to="javascript:void(0);"
                                               className="fs-12"
                                             >
-                                              Alexandra Della
-                                            </a>
+                                              alexandra Della
+                                            </Link>
                                           </div>
                                         </div>
                                       </div>
@@ -1677,17 +1833,22 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/2.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
                                         </div>
                                         <div className="mt-3 mt-lg-0 ms-lg-3 item-text">
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
-                                              iOS Apps Development
+                                              iOS apps Development
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet,
                                             consectetur adipisicing elit. Sint
@@ -1697,17 +1858,22 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={new URL('../assets copy/images/avatar/2.png', import.meta.url).href}
+                                                src={
+                                                  new URL(
+                                                    "../assets copy/images/avatar/2.png",
+                                                    import.meta.url,
+                                                  ).href
+                                                }
                                                 alt=""
                                                 className="img-fluid"
                                               />
                                             </div>
-                                            <a
-                                              href="javascript:void(0);"
+                                            <Link
+                                              to="javascript:void(0);"
                                               className="fs-12"
                                             >
                                               Green Cute
-                                            </a>
+                                            </Link>
                                           </div>
                                         </div>
                                       </div>
@@ -1716,17 +1882,22 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/3.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
                                         </div>
                                         <div className="mt-3 mt-lg-0 ms-lg-3 item-text">
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Figma Dashboard Design
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet,
                                             consectetur adipisicing elit. Sint
@@ -1736,17 +1907,22 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={new URL('../assets copy/images/avatar/3.png', import.meta.url).href}
+                                                src={
+                                                  new URL(
+                                                    "../assets copy/images/avatar/3.png",
+                                                    import.meta.url,
+                                                  ).href
+                                                }
                                                 alt=""
                                                 className="img-fluid"
                                               />
                                             </div>
-                                            <a
-                                              href="javascript:void(0);"
+                                            <Link
+                                              to="javascript:void(0);"
                                               className="fs-12"
                                             >
                                               Malanie Hanvey
-                                            </a>
+                                            </Link>
                                           </div>
                                         </div>
                                       </div>
@@ -1755,17 +1931,22 @@ const Navbar = () => {
                                       <div className="d-lg-flex align-items-center gap-3">
                                         <div className="wd-150 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/4.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3"
                                           />
                                         </div>
                                         <div className="mt-3 mt-lg-0 ms-lg-3 item-text">
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               React Dashboard Design
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet,
                                             consectetur adipisicing elit. Sint
@@ -1775,17 +1956,22 @@ const Navbar = () => {
                                           <div className="hstack gap-2 mt-3">
                                             <div className="avatar-image avatar-sm">
                                               <img
-                                                src={new URL('../assets copy/images/avatar/4.png', import.meta.url).href}
+                                                src={
+                                                  new URL(
+                                                    "../assets copy/images/avatar/4.png",
+                                                    import.meta.url,
+                                                  ).href
+                                                }
                                                 alt=""
                                                 className="img-fluid"
                                               />
                                             </div>
-                                            <a
-                                              href="javascript:void(0);"
+                                            <Link
+                                              to="javascript:void(0);"
                                               className="fs-12"
                                             >
                                               Kenneth Hune
-                                            </a>
+                                            </Link>
                                           </div>
                                         </div>
                                       </div>
@@ -1808,11 +1994,11 @@ const Navbar = () => {
                                           <i className="feather-bar-chart-2 mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
-                                              Analytics Services
+                                              analytics Services
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1828,11 +2014,11 @@ const Navbar = () => {
                                           <i className="feather-feather mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Content Writing
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1848,11 +2034,11 @@ const Navbar = () => {
                                           <i className="feather-bell mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               SEO (Search Engine Optimization)
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1868,11 +2054,11 @@ const Navbar = () => {
                                           <i className="feather-shield mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Security Services
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1888,11 +2074,11 @@ const Navbar = () => {
                                           <i className="feather-shopping-cart mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               eCommerce Services
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1908,11 +2094,11 @@ const Navbar = () => {
                                           <i className="feather-life-buoy mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Support Services
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -1931,12 +2117,12 @@ const Navbar = () => {
                                           </span>
                                         </div>
                                         <div className="mt-2 mt-lg-0">
-                                          <a
-                                            href="javascript:void(0);"
+                                          <Link
+                                            to="javascript:void(0);"
                                             className="fs-13 text-primary"
                                           >
                                             Learn More &rarr;
-                                          </a>
+                                          </Link>
                                         </div>
                                       </div>
                                     </div>
@@ -1986,7 +2172,12 @@ const Navbar = () => {
                                       <div className="carousel-item active">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/6.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2004,14 +2195,19 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/5.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
                                         </div>
                                         <div className="carousel-caption">
                                           <h5 className="carousel-caption-title text-truncate-1-line">
-                                            iOS Apps Development
+                                            iOS apps Development
                                           </h5>
                                           <p className="carousel-caption-desc">
                                             Some representative placeholder
@@ -2022,7 +2218,12 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/4.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2040,7 +2241,12 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/3.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2058,7 +2264,12 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/2.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2076,7 +2287,12 @@ const Navbar = () => {
                                       <div className="carousel-item">
                                         <div className="nxl-mega-menu-image">
                                           <img
-                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/1.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid d-block w-100"
                                           />
@@ -2138,11 +2354,11 @@ const Navbar = () => {
                                           <i className="feather-bell mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Notifications
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2158,11 +2374,11 @@ const Navbar = () => {
                                           <i className="feather-bar-chart-2 mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
-                                              Analytics
+                                              analytics
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2178,11 +2394,11 @@ const Navbar = () => {
                                           <i className="feather-link-2 mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Ingetrations
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2198,11 +2414,11 @@ const Navbar = () => {
                                           <i className="feather-book mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Documentations
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2218,11 +2434,11 @@ const Navbar = () => {
                                           <i className="feather-shield mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Security
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2238,11 +2454,11 @@ const Navbar = () => {
                                           <i className="feather-life-buoy mx-auto"></i>
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Support
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum dolor sit amet
                                             consectetur adipisicing elit Unde
@@ -2257,18 +2473,23 @@ const Navbar = () => {
                                 <div className="col-xxl-3 offset-xxl-1 col-xl-4">
                                   <div className="nxl-mega-menu-image">
                                     <img
-                                      src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                      src={
+                                        new URL(
+                                          "../assets copy/images/banner/1.jpg",
+                                          import.meta.url,
+                                        ).href
+                                      }
                                       alt=""
                                       className="img-fluid"
                                     />
                                   </div>
                                   <div className="mt-4">
-                                    <a
-                                      href="mailto:flexilecode@gmail.com"
+                                    <Link
+                                      to="mailto:flexilecode@gmail.com"
                                       className="fs-13 fw-bold"
                                     >
                                       View all features on Duralux &rarr;
-                                    </a>
+                                    </Link>
                                   </div>
                                 </div>
                               </div>
@@ -2283,42 +2504,42 @@ const Navbar = () => {
                                   <h6 className="dropdown-item-title">
                                     Categories
                                   </h6>
-                                  <a
-                                    href="javascript:void(0);"
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Support
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Services
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
-                                    Applicatios
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                    applicatios
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     eCommerce
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Development
-                                  </a>
-                                  <a
-                                    href="javascript:void(0);"
+                                  </Link>
+                                  <Link
+                                    to="javascript:void(0);"
                                     className="dropdown-item"
                                   >
                                     Miscellaneous
-                                  </a>
+                                  </Link>
                                 </div>
                                 <div className="col-xxl-10">
                                   <div className="row g-4">
@@ -2326,17 +2547,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/1.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/1.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2353,17 +2579,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/2.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/2.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2380,17 +2611,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/3.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/3.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2407,17 +2643,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/4.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/4.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2434,17 +2675,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/5.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/5.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2461,17 +2707,22 @@ const Navbar = () => {
                                       <div className="d-flex align-items-center gap-3">
                                         <div className="wd-100 rounded-3">
                                           <img
-                                            src={new URL('../assets copy/images/banner/6.jpg', import.meta.url).href}
+                                            src={
+                                              new URL(
+                                                "../assets copy/images/banner/6.jpg",
+                                                import.meta.url,
+                                              ).href
+                                            }
                                             alt=""
                                             className="img-fluid rounded-3 border border-3"
                                           />
                                         </div>
                                         <div>
-                                          <a href="javascript:void(0);">
+                                          <Link to="javascript:void(0);">
                                             <h6 className="menu-item-heading text-truncate-1-line">
                                               Lorem ipsum dolor sit
                                             </h6>
-                                          </a>
+                                          </Link>
                                           <p className="fs-12 fw-normal text-muted mb-0 text-truncate-2-line">
                                             Lorem ipsum, dolor sit amet
                                             consectetur adipisicing elit. Eius
@@ -2495,12 +2746,12 @@ const Navbar = () => {
                                           </span>
                                         </div>
                                         <div className="wd-100 text-end">
-                                          <a
-                                            href="javascript:void(0);"
+                                          <Link
+                                            to="javascript:void(0);"
                                             className="fs-13 text-primary"
                                           >
                                             Learn More &rarr;
-                                          </a>
+                                          </Link>
                                         </div>
                                       </div>
                                     </div>
@@ -2527,105 +2778,115 @@ const Navbar = () => {
           <div className="header-right ms-auto">
             <div className="d-flex align-items-center">
               <div className="dropdown nxl-h-item nxl-header-search">
-                <a
-                  href="javascript:void(0);"
+                <Link
+                  to="javascript:void(0);"
                   className="nxl-head-link me-0"
                   data-bs-toggle="dropdown"
                   data-bs-auto-close="outside"
                 >
                   <i className="feather-search"></i>
-                </a>
+                </Link>
                 <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-search-dropdown">
-                  <div className="input-group search-form">
+                  <div className="input-group flex-nowrap search-form">
                     <span className="input-group-text">
                       <i className="feather-search fs-6 text-muted"></i>
                     </span>
+
                     <input
                       type="text"
                       className="form-control search-input-field"
-                      placeholder="Search...."
+                      placeholder="Search..."
                     />
+
                     <span className="input-group-text">
-                      <button type="button" className="btn-close"></button>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                      ></button>
+                      {/* <span className="ms-1">ESC</span> */}
                     </span>
                   </div>
+
                   <div className="dropdown-divider mt-0"></div>
+
                   <div className="search-items-wrapper">
                     <div className="searching-for px-4 py-2">
                       <p className="fs-11 fw-medium text-muted">
                         I'm searching for...
                       </p>
+
                       <div className="d-flex flex-wrap gap-1">
-                        <a
-                          href="javascript:void(0);"
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Projects
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Leads
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Contacts
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Inbox
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Invoices
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Tasks
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link> */}
+                        <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Customers
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link>
+                        {/* <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Notes
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link>
+                        <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
-                          Affiliate
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                          affiliate
+                        </Link>
+                        <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Storage
-                        </a>
-                        <a
-                          href="javascript:void(0);"
+                        </Link>
+                        <Link
+                          to="javascript:void(0);"
                           className="flex-fill border rounded py-1 px-2 text-center fs-11 fw-semibold"
                         >
                           Calendar
-                        </a>
+                        </Link> */}
                       </div>
                     </div>
                     <div className="dropdown-divider"></div>
-                    <div className="recent-result px-4 py-2">
+                    {/* <div className="recent-result px-4 py-2">
                       <h4 className="fs-13 fw-normal text-gray-600 mb-3">
                         Recnet{" "}
                         <span className="badge small bg-gray-200 rounded ms-1 text-dark">
@@ -2638,24 +2899,24 @@ const Navbar = () => {
                             <i className="feather-airplay"></i>
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               CRM dashboard redesign
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               Home / project / crm
                             </p>
                           </div>
                         </div>
                         <div>
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="badge border rounded text-dark"
                           >
                             /<i className="feather-command ms-1 fs-10"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
@@ -2664,24 +2925,24 @@ const Navbar = () => {
                             <i className="feather-file-plus"></i>
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Create new document
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               Home / tasks / docs
                             </p>
                           </div>
                         </div>
                         <div>
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="badge border rounded text-dark"
                           >
                             N /<i className="feather-command ms-1 fs-10"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
@@ -2690,29 +2951,29 @@ const Navbar = () => {
                             <i className="feather-user-plus"></i>
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Invite project colleagues
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               Home / project / invite
                             </p>
                           </div>
                         </div>
                         <div>
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="badge border rounded text-dark"
                           >
                             P /<i className="feather-command ms-1 fs-10"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="dropdown-divider my-3"></div>
-                    <div className="users-result px-4 py-2">
+                    {/* <div className="users-result px-4 py-2">
                       <h4 className="fs-13 fw-normal text-gray-600 mb-3">
                         Users{" "}
                         <span className="badge small bg-gray-200 rounded ms-1 text-dark">
@@ -2729,23 +2990,23 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
-                              Alexandra Della
-                            </a>
+                              alexandra Della
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               alex.della@outlook.com
                             </p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-chevron-right"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="d-flex align-items-center gap-3">
@@ -2757,23 +3018,23 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Green Cute
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               green.cute@outlook.com
                             </p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-chevron-right"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="d-flex align-items-center gap-3">
@@ -2785,23 +3046,23 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Malanie Hanvey
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               malanie.anvey@outlook.com
                             </p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-chevron-right"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="d-flex align-items-center gap-3">
@@ -2813,23 +3074,23 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Kenneth Hune
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               kenth.hune@outlook.com
                             </p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-chevron-right"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-0">
                         <div className="d-flex align-items-center gap-3">
@@ -2841,27 +3102,27 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
-                              Archie Cantones
-                            </a>
+                              archie Cantones
+                            </Link>
                             <p className="fs-11 text-muted mb-0">
                               archie.cones@outlook.com
                             </p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-chevron-right"></i>
-                        </a>
+                        </Link>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="dropdown-divider my-3"></div>
-                    <div className="file-result px-4 py-2">
+                    {/* <div className="file-result px-4 py-2">
                       <h4 className="fs-13 fw-normal text-gray-600 mb-3">
                         Files{" "}
                         <span className="badge small bg-gray-200 rounded ms-1 text-dark">
@@ -2878,21 +3139,21 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Project Style CSS
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">05.74 MB</p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-download"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="d-flex align-items-center gap-3">
@@ -2904,21 +3165,21 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Dashboard Project Zip
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">46.83 MB</p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-download"></i>
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-0">
                         <div className="d-flex align-items-center gap-3">
@@ -2930,46 +3191,52 @@ const Navbar = () => {
                             />
                           </div>
                           <div>
-                            <a
-                              href="javascript:void(0);"
+                            <Link
+                              to="javascript:void(0);"
                               className="font-body fw-bold d-block mb-1"
                             >
                               Project Document PDF
-                            </a>
+                            </Link>
                             <p className="fs-11 text-muted mb-0">12.85 MB</p>
                           </div>
                         </div>
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="avatar-text avatar-md"
                         >
                           <i className="feather-download"></i>
-                        </a>
+                        </Link>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="dropdown-divider mt-3 mb-0"></div>
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="p-3 fs-10 fw-bold text-uppercase text-center d-block"
                     >
                       Loar More
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
-              <div className="dropdown nxl-h-item nxl-header-language d-none d-sm-flex">
-                <a
-                  href="javascript:void(0);"
+              {/* language  */}
+              {/* <div className="dropdown nxl-h-item nxl-header-language d-none d-sm-flex">
+                <Link
+                  to="javascript:void(0);"
                   className="nxl-head-link me-0 nxl-language-link"
                   data-bs-toggle="dropdown"
                   data-bs-auto-close="outside"
                 >
                   <img
-                    src={new URL('../assets copy/vendors/img/flags/4x3/us.svg', import.meta.url).href}
+                    src={
+                      new URL(
+                        "../assets copy/vendors/img/flags/4x3/us.svg",
+                        import.meta.url,
+                      ).href
+                    }
                     alt=""
                     className="img-fluid wd-20"
                   />
-                </a>
+                </Link>
                 <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-language-dropdown">
                   <div className="dropdown-divider mt-0"></div>
                   <div className="language-items-wrapper">
@@ -2980,231 +3247,293 @@ const Navbar = () => {
                           12 languages avaiable!
                         </p>
                       </div>
-                      <a
-                        href="javascript:void(0);"
+                      <Link
+                        to="javascript:void(0);"
                         className="avatar-text avatar-md"
                         data-bs-toggle="tooltip"
-                        title="Add Language"
+                        title="add Language"
                       >
                         <i className="feather-plus"></i>
-                      </a>
+                      </Link>
                     </div>
                     <div className="dropdown-divider"></div>
                     <div className="row px-4 pt-3">
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/sa.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/sa.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
-                          <span>Arabic</span>
-                        </a>
+                          <span>arabic</span>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/bd.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/bd.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Bengali</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/ch.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/ch.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Chinese</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/nl.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/nl.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Dutch</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select active">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/us.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/us.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>English</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/fr.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/fr.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>French</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/de.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/de.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>German</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/in.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/in.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Hindi</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/ru.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/ru.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Russian</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/es.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/es.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Spanish</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/tr.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/tr.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Turkish</span>
-                        </a>
+                        </Link>
                       </div>
                       <div className="col-sm-4 col-6 language_select">
-                        <a
-                          href="javascript:void(0);"
+                        <Link
+                          to="javascript:void(0);"
                           className="d-flex align-items-center gap-2"
                         >
                           <div className="avatar-image avatar-sm">
                             <img
-                              src={new URL('../assets copy/vendors/img/flags/1x1/pk.svg', import.meta.url).href}
+                              src={
+                                new URL(
+                                  "../assets copy/vendors/img/flags/1x1/pk.svg",
+                                  import.meta.url,
+                                ).href
+                              }
                               alt=""
                               className="img-fluid"
                             />
                           </div>
                           <span>Urdo</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="nxl-h-item d-none d-sm-flex">
                 <div className="full-screen-switcher">
-                  <a
-                    href="javascript:void(0);"
+                  <Link
+                    to="javascript:void(0);"
                     className="nxl-head-link me-0"
-                    onClick={() => window.jQuery('body').fullScreenHelper('toggle')}
+                    onClick={() =>
+                      window.jQuery("body").fullScreenHelper("toggle")
+                    }
                   >
                     <i className="feather-maximize maximize"></i>
                     <i className="feather-minimize minimize"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="nxl-h-item dark-light-theme">
-                <a
-                  href="javascript:void(0);"
+                <Link
+                  to="javascript:void(0);"
                   className="nxl-head-link me-0 dark-button"
                 >
                   <i className="feather-moon"></i>
-                </a>
-                <a
-                  href="javascript:void(0);"
+                </Link>
+                <Link
+                  to="javascript:void(0);"
                   className="nxl-head-link me-0 light-button"
                   style={{ display: "none" }}
                 >
                   <i className="feather-sun"></i>
-                </a>
+                </Link>
               </div>
               <div className="dropdown nxl-h-item">
-                <a
-                  href="javascript:void(0);"
+                <Link
+                  to="javascript:void(0);"
                   className="nxl-head-link me-0"
                   data-bs-toggle="dropdown"
                   role="button"
@@ -3212,73 +3541,78 @@ const Navbar = () => {
                 >
                   <i className="feather-clock"></i>
                   <span className="badge bg-success nxl-h-badge">2</span>
-                </a>
+                </Link>
                 <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-timesheets-menu">
                   <div className="d-flex justify-content-between align-items-center timesheets-head">
                     <h6 className="fw-bold text-dark mb-0">Timesheets</h6>
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="fs-11 text-success text-end ms-auto"
                       data-bs-toggle="tooltip"
                       title="Upcomming Timers"
                     >
                       <i className="feather-clock"></i>
                       <span>3 Upcomming</span>
-                    </a>
+                    </Link>
                   </div>
                   <div className="d-flex justify-content-between align-items-center flex-column timesheets-body">
                     <i className="feather-clock fs-1 mb-4"></i>
                     <p className="text-muted">No started timers found yes!</p>
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="btn btn-sm btn-primary"
                     >
                       Started Timer
-                    </a>
+                    </Link>
                   </div>
                   <div className="text-center timesheets-footer">
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="fs-13 fw-semibold text-dark"
                     >
-                      Alls Timesheets
-                    </a>
+                      alls Timesheets
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className="dropdown nxl-h-item">
-                <a
+                <Link
                   className="nxl-head-link me-3"
                   data-bs-toggle="dropdown"
-                  href="#"
+                  to="#"
                   role="button"
                   data-bs-auto-close="outside"
                 >
                   <i className="feather-bell"></i>
                   <span className="badge bg-danger nxl-h-badge">3</span>
-                </a>
+                </Link>
                 <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu">
                   <div className="d-flex justify-content-between align-items-center notifications-head">
                     <h6 className="fw-bold text-dark mb-0">Notifications</h6>
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="fs-11 text-success text-end ms-auto"
                       data-bs-toggle="tooltip"
                       title="Make as Read"
                     >
                       <i className="feather-check"></i>
                       <span>Make as Read</span>
-                    </a>
+                    </Link>
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={new URL('../assets copy/images/avatar/2.png', import.meta.url).href}
+                      src={
+                        new URL(
+                          "../assets copy/images/avatar/2.png",
+                          import.meta.url,
+                        ).href
+                      }
                       alt=""
                       className="rounded me-3 border"
                     />
                     <div className="notifications-desc">
-                      <a
-                        href="javascript:void(0);"
+                      <Link
+                        to="javascript:void(0);"
                         className="font-body text-truncate-2-line"
                       >
                         {" "}
@@ -3286,39 +3620,44 @@ const Navbar = () => {
                           Malanie Hanvey
                         </span>{" "}
                         We should talk about that at lunch!
-                      </a>
+                      </Link>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="notifications-date text-muted border-bottom border-bottom-dashed">
                           2 minutes ago
                         </div>
                         <div className="d-flex align-items-center float-end gap-2">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="d-block wd-8 ht-8 rounded-circle bg-gray-300"
                             data-bs-toggle="tooltip"
                             title="Make as Read"
-                          ></a>
-                          <a
-                            href="javascript:void(0);"
+                          ></Link>
+                          <Link
+                            to="javascript:void(0);"
                             className="text-danger"
                             data-bs-toggle="tooltip"
                             title="Remove"
                           >
                             <i className="feather-x fs-12"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={new URL('../assets copy/images/avatar/3.png', import.meta.url).href}
+                      src={
+                        new URL(
+                          "../assets copy/images/avatar/3.png",
+                          import.meta.url,
+                        ).href
+                      }
                       alt=""
                       className="rounded me-3 border"
                     />
                     <div className="notifications-desc">
-                      <a
-                        href="javascript:void(0);"
+                      <Link
+                        to="javascript:void(0);"
                         className="font-body text-truncate-2-line"
                       >
                         {" "}
@@ -3326,104 +3665,119 @@ const Navbar = () => {
                           Valentine Maton
                         </span>{" "}
                         You can download the latest invoices now.
-                      </a>
+                      </Link>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="notifications-date text-muted border-bottom border-bottom-dashed">
                           36 minutes ago
                         </div>
                         <div className="d-flex align-items-center float-end gap-2">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="d-block wd-8 ht-8 rounded-circle bg-gray-300"
                             data-bs-toggle="tooltip"
                             title="Make as Read"
-                          ></a>
-                          <a
-                            href="javascript:void(0);"
+                          ></Link>
+                          <Link
+                            to="javascript:void(0);"
                             className="text-danger"
                             data-bs-toggle="tooltip"
                             title="Remove"
                           >
                             <i className="feather-x fs-12"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="notifications-item">
                     <img
-                      src={new URL('../assets copy/images/avatar/4.png', import.meta.url).href}
+                      src={
+                        new URL(
+                          "../assets copy/images/avatar/4.png",
+                          import.meta.url,
+                        ).href
+                      }
                       alt=""
                       className="rounded me-3 border"
                     />
                     <div className="notifications-desc">
-                      <a
-                        href="javascript:void(0);"
+                      <Link
+                        to="javascript:void(0);"
                         className="font-body text-truncate-2-line"
                       >
                         {" "}
                         <span className="fw-semibold text-dark">
-                          Archie Cantones
+                          archie Cantones
                         </span>{" "}
                         Don't forget to pickup Jeremy after school!
-                      </a>
+                      </Link>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="notifications-date text-muted border-bottom border-bottom-dashed">
                           53 minutes ago
                         </div>
                         <div className="d-flex align-items-center float-end gap-2">
-                          <a
-                            href="javascript:void(0);"
+                          <Link
+                            to="javascript:void(0);"
                             className="d-block wd-8 ht-8 rounded-circle bg-gray-300"
                             data-bs-toggle="tooltip"
                             title="Make as Read"
-                          ></a>
-                          <a
-                            href="javascript:void(0);"
+                          ></Link>
+                          <Link
+                            to="javascript:void(0);"
                             className="text-danger"
                             data-bs-toggle="tooltip"
                             title="Remove"
                           >
                             <i className="feather-x fs-12"></i>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="text-center notifications-footer">
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="fs-13 fw-semibold text-dark"
                     >
-                      Alls Notifications
-                    </a>
+                      alls Notifications
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className="dropdown nxl-h-item">
-                <a
-                  href="javascript:void(0);"
+                <Link
+                  to="javascript:void(0);"
                   data-bs-toggle="dropdown"
                   role="button"
                   data-bs-auto-close="outside"
                 >
                   <img
-                    src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
+                    src={
+                      new URL(
+                        "../assets copy/images/avatar/1.png",
+                        import.meta.url,
+                      ).href
+                    }
                     alt="user-image"
                     className="img-fluid user-avtar me-0"
                   />
-                </a>
+                </Link>
                 <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
                   <div className="dropdown-header">
                     <div className="d-flex align-items-center">
                       <img
-                        src={new URL('../assets copy/images/avatar/1.png', import.meta.url).href}
+                        src={
+                          new URL(
+                            "../assets copy/images/avatar/1.png",
+                            import.meta.url,
+                          ).href
+                        }
                         alt="user-image"
                         className="img-fluid user-avtar"
                       />
                       <div>
                         <h6 className="text-dark mb-0">
-                          Alexandra Della{" "}
+                          alexandra Della{" "}
                           <span className="badge bg-soft-success text-success ms-1">
                             PRO
                           </span>
@@ -3435,61 +3789,61 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="dropdown">
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="dropdown-item"
                       data-bs-toggle="dropdown"
                     >
                       <span className="hstack">
                         <i className="wd-10 ht-10 border border-2 border-gray-1 bg-success rounded-circle me-2"></i>
-                        <span>Active</span>
+                        <span>active</span>
                       </span>
                       <i className="feather-chevron-right ms-auto me-0"></i>
-                    </a>
+                    </Link>
                     <div className="dropdown-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-warning rounded-circle me-2"></i>
-                          <span>Always</span>
+                          <span>always</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-success rounded-circle me-2"></i>
-                          <span>Active</span>
+                          <span>active</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-danger rounded-circle me-2"></i>
                           <span>Bussy</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-info rounded-circle me-2"></i>
                           <span>Inactive</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-dark rounded-circle me-2"></i>
                           <span>Disabled</span>
                         </span>
-                      </a>
+                      </Link>
                       <div className="dropdown-divider"></div>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-10 ht-10 border border-2 border-gray-1 bg-primary rounded-circle me-2"></i>
                           <span>Cutomization</span>
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="dropdown-divider"></div>
                   <div className="dropdown">
-                    <a
-                      href="javascript:void(0);"
+                    <Link
+                      to="javascript:void(0);"
                       className="dropdown-item"
                       data-bs-toggle="dropdown"
                     >
@@ -3498,73 +3852,76 @@ const Navbar = () => {
                         <span>Subscriptions</span>
                       </span>
                       <i className="feather-chevron-right ms-auto me-0"></i>
-                    </a>
+                    </Link>
                     <div className="dropdown-menu">
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Plan</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Billings</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Referrals</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Payments</span>
                         </span>
-                      </a>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      </Link>
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Statements</span>
                         </span>
-                      </a>
+                      </Link>
                       <div className="dropdown-divider"></div>
-                      <a href="javascript:void(0);" className="dropdown-item">
+                      <Link to="javascript:void(0);" className="dropdown-item">
                         <span className="hstack">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Subscriptions</span>
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="dropdown-divider"></div>
-                  <a href="javascript:void(0);" className="dropdown-item">
+                  <Link to="javascript:void(0);" className="dropdown-item">
                     <i className="feather-user"></i>
                     <span>Profile Details</span>
-                  </a>
-                  <a href="javascript:void(0);" className="dropdown-item">
+                  </Link>
+                  <Link to="javascript:void(0);" className="dropdown-item">
                     <i className="feather-activity"></i>
-                    <span>Activity Feed</span>
-                  </a>
-                  <a href="javascript:void(0);" className="dropdown-item">
+                    <span>activity Feed</span>
+                  </Link>
+                  <Link to="javascript:void(0);" className="dropdown-item">
                     <i className="feather-dollar-sign"></i>
                     <span>Billing Details</span>
-                  </a>
-                  <a href="javascript:void(0);" className="dropdown-item">
+                  </Link>
+                  <Link to="javascript:void(0);" className="dropdown-item">
                     <i className="feather-bell"></i>
                     <span>Notifications</span>
-                  </a>
-                  <a href="javascript:void(0);" className="dropdown-item">
+                  </Link>
+                  <Link to="javascript:void(0);" className="dropdown-item">
                     <i className="feather-settings"></i>
-                    <span>Account Settings</span>
-                  </a>
+                    <span>account Settings</span>
+                  </Link>
                   <div className="dropdown-divider"></div>
-                  <a href="./auth-login-minimal.html" className="dropdown-item">
+                  <Link
+                    to="/auth-login-minimal"
+                    className="dropdown-item"
+                  >
                     <i className="feather-log-out"></i>
                     <span>Logout</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

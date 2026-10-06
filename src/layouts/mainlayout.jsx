@@ -1,11 +1,13 @@
-import React from "react";
-import navbar from "../Components/navbar";
+import Navbar from "../Components/navbar";
+import { Outlet } from "react-router-dom";
 
-const mainlayout = ({ childrens }) => {
-  return <>
-  <navbar/>
-  {childrens}
-  </>;
+const Mainlayout = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
 };
 
-export default mainlayout;
+export default Mainlayout;
