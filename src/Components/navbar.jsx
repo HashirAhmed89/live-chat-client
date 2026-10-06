@@ -1,38 +1,55 @@
 import { Link } from "react-router-dom";
-import "../assets copy/vendors/js/nxlNavigation.min.js";
-import "../assets copy/js/common-init.min.js";
-const Navbar = () => {
+const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
   return (
     <>
-      <header className="nxl-header">
+      <header
+        className="nxl-header"
+        style={{ zIndex: isSidebarOpen ? 1027 : undefined }}
+      >
         <div className="header-wrapper">
           {/* <!--! [Start] Header Left !--> */}
           <div className="header-left d-flex align-items-center gap-4">
             {/* <!--! [Start] nxl-head-mobile-toggler !--> */}
-            <Link
-              to="javascript:void(0);"
+            <a
+              href="#"
               className="nxl-head-mobile-toggler"
               id="mobile-collapse"
+              onClick={(event) => {
+                event.preventDefault();
+                onSidebarToggle();
+              }}
             >
               <div className="hamburger hamburger--arrowturn">
                 <div className="hamburger-box">
                   <div className="hamburger-inner"></div>
                 </div>
               </div>
-            </Link>
+            </a>
             {/* <!--! [Start] nxl-head-mobile-toggler !-->
                 <!--! [Start] nxl-navigation-toggle !--> */}
             <div className="nxl-navigation-toggle">
-              <Link to="javascript:void(0);" id="menu-mini-button">
+              <a
+                href="#"
+                id="menu-mini-button"
+                style={{ display: isSidebarOpen ? undefined : "none" }}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onSidebarToggle();
+                }}
+              >
                 <i className="feather-align-left"></i>
-              </Link>
-              <Link
-                to="javascript:void(0);"
+              </a>
+              <a
+                href="#"
                 id="menu-expend-button"
-                style={{ display: "none" }}
+                style={{ display: isSidebarOpen ? "none" : undefined }}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onSidebarToggle();
+                }}
               >
                 <i className="feather-arrow-right"></i>
-              </Link>
+              </a>
             </div>
             {/* <!--! [End] nxl-navigation-toggle !-->
                 <!--! [Start] nxl-lavel-mega-menu-toggle !--> */}

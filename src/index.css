@@ -5,3 +5,15 @@
 .nxl-header + * {
   margin-top: 80px;
 } */
+
+.nxl-navigation .navbar-content .nxl-hasmenu:not(.nxl-trigger) > .nxl-submenu {
+  display: none;
+}
+
+.sidebar-layout.sidebar-closed .nxl-container {
+  margin-left: 0;
+}
+
+.sidebar-layout.sidebar-closed .nxl-header {
+  left: 0;
+}
