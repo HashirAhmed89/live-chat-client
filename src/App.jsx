@@ -1,12 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Mainlayout from "./layouts/mainlayout";
+import Analytics from "./pages/analytics";
 import Chat from "./pages/chat";
-import Email from "./pages/email";
-import Notes from "./pages/notes";
-import Tasks from "./pages/task";
-import Calendar from "./pages/calendar";
-import Contacts from "./pages/contacts";
-import Storage from "./pages/storage";
 
 
 // const navigationPages = [
@@ -53,20 +48,21 @@ import Storage from "./pages/storage";
 //   { path: "/auth-maintenance-minimal", title: "Maintenance" },
 //   { path: "/auth-maintenance-creative", title: "Maintenance" },
 // ];
- 
+
 const App = () => (
   <BrowserRouter>
     <Routes>
       <Route element={<Mainlayout />}>
-        <Route path="/" element={<div><h1>Home Page</h1></div>} />
+        <Route
+          path="/"
+          element={
+            <div>
+              <h1>Home Page</h1>
+            </div>
+          }
+        />
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/email" element={<Email />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/storage" element={<Storage />} />
-       
       </Route>
     </Routes>
   </BrowserRouter>
