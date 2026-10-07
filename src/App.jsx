@@ -1,8 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Mainlayout from "./layouts/mainlayout";
 import Analytics from "./pages/analytics";
-import Chat from "./pages/chat";
-
+import Conversation from "./pages/Conversation";
+import Ticket from "./pages/ticket";
+import Customer from "./pages/customer";
 
 // const navigationPages = [
 //   { path: "/reports-sales", title: "Sales Report" },
@@ -62,7 +63,9 @@ const App = () => (
           }
         />
         <Route path="/analytics" element={<Analytics />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/ticket" element={<Ticket/>}/>
+        <Route path="/conversation" element={<Conversation />} />
+        <Route path="/customer" element={<Customer/>}/>
       </Route>
     </Routes>
   </BrowserRouter>

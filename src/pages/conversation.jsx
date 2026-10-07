@@ -7,7 +7,7 @@ import zipFileIcon from "../assets copy/images/file-icons/zip.png";
 import pngFileIcon from "../assets copy/images/file-icons/png.png";
 import psdFileIcon from "../assets copy/images/file-icons/psd.png";
 
-const Chat = () => {
+const Conversation = () => {
   return (
     <>
       <div>
@@ -1154,4 +1154,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Conversation;
