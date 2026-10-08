@@ -4,6 +4,7 @@ import Analytics from "./pages/analytics";
 import Conversation from "./pages/Conversation";
 import Ticket from "./pages/ticket";
 import Customer from "./pages/customer";
+import Agent from "./pages/agent";
 
 // const navigationPages = [
 //   { path: "/reports-sales", title: "Sales Report" },
@@ -66,6 +67,7 @@ const App = () => (
         <Route path="/ticket" element={<Ticket/>}/>
         <Route path="/conversation" element={<Conversation />} />
         <Route path="/customer" element={<Customer/>}/>
+        <Route path="/agent" element={<Agent/>}/>
       </Route>
     </Routes>
   </BrowserRouter>

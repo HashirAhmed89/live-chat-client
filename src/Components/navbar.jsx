@@ -1,5 +1,18 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./navbar.css";
+
 const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
+  const [isDarkTheme, setIsDarkTheme] = useState(() => (
+    localStorage.getItem("app-skin") === "app-skin-dark"
+    || document.documentElement.classList.contains("app-skin-dark")
+  ));
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("app-skin-dark", isDarkTheme);
+    localStorage.setItem("app-skin", isDarkTheme ? "app-skin-dark" : "app-skin-light");
+  }, [isDarkTheme]);
+
   return (
     <>
       <header
@@ -143,13 +156,6 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                         >
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Project Report</span>
-                        </Link>
-                        <Link
-                          to="/reports-timesheets"
-                          className="dropdown-item"
-                        >
-                          <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
-                          <span>Timesheets Report</span>
                         </Link>
                       </div>
                     </div>
@@ -1202,12 +1208,6 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                                     className="dropdown-item"
                                   >
                                     Projects
-                                  </Link>
-                                  <Link
-                                    to="javascript:void(0);"
-                                    className="dropdown-item"
-                                  >
-                                    Timesheets
                                   </Link>
                                 </div>
                                 <div className="col-lg-4">
@@ -3534,63 +3534,15 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                 </div>
               </div>
               <div className="nxl-h-item dark-light-theme">
-                <Link
-                  to="javascript:void(0);"
-                  className="nxl-head-link me-0 dark-button"
+                <button
+                  type="button"
+                  className={`nxl-head-link me-0 ${isDarkTheme ? "light-button" : "dark-button"}`}
+                  aria-label={isDarkTheme ? "Switch to light theme" : "Switch to dark theme"}
+                  title={isDarkTheme ? "Switch to light theme" : "Switch to dark theme"}
+                  onClick={() => setIsDarkTheme((currentTheme) => !currentTheme)}
                 >
-                  <i className="feather-moon"></i>
-                </Link>
-                <Link
-                  to="javascript:void(0);"
-                  className="nxl-head-link me-0 light-button"
-                  style={{ display: "none" }}
-                >
-                  <i className="feather-sun"></i>
-                </Link>
-              </div>
-              <div className="dropdown nxl-h-item">
-                <Link
-                  to="javascript:void(0);"
-                  className="nxl-head-link me-0"
-                  data-bs-toggle="dropdown"
-                  role="button"
-                  data-bs-auto-close="outside"
-                >
-                  <i className="feather-clock"></i>
-                  <span className="badge bg-success nxl-h-badge">2</span>
-                </Link>
-                <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-timesheets-menu">
-                  <div className="d-flex justify-content-between align-items-center timesheets-head">
-                    <h6 className="fw-bold text-dark mb-0">Timesheets</h6>
-                    <Link
-                      to="javascript:void(0);"
-                      className="fs-11 text-success text-end ms-auto"
-                      data-bs-toggle="tooltip"
-                      title="Upcomming Timers"
-                    >
-                      <i className="feather-clock"></i>
-                      <span>3 Upcomming</span>
-                    </Link>
-                  </div>
-                  <div className="d-flex justify-content-between align-items-center flex-column timesheets-body">
-                    <i className="feather-clock fs-1 mb-4"></i>
-                    <p className="text-muted">No started timers found yes!</p>
-                    <Link
-                      to="javascript:void(0);"
-                      className="btn btn-sm btn-primary"
-                    >
-                      Started Timer
-                    </Link>
-                  </div>
-                  <div className="text-center timesheets-footer">
-                    <Link
-                      to="javascript:void(0);"
-                      className="fs-13 fw-semibold text-dark"
-                    >
-                      alls Timesheets
-                    </Link>
-                  </div>
-                </div>
+                  <i className={isDarkTheme ? "feather-sun" : "feather-moon"} aria-hidden="true"></i>
+                </button>
               </div>
               <div className="dropdown nxl-h-item">
                 <Link

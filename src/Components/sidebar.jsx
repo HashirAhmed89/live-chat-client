@@ -129,14 +129,14 @@ const Sidebar = ({ isOpen = true }) => {
               </Link>
               <ul className="nxl-submenu">
                 <li className="nxl-item">
-                  <a className="nxl-link" href="customers.html">
+                  <Link className="nxl-link" to="/customer">
                     Customers
-                  </a>
+                  </Link>
                 </li>
                 <li className="nxl-item">
-                  <a className="nxl-link" href="customers-view.html">
+                  <Link className="nxl-link" to="/agent">
                     Agents
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>

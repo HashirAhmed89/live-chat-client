@@ -18,6 +18,32 @@
   left: 0;
 }
 
+@media (min-width: 1025px) {
+  .sidebar-layout > .main-content,
+  .sidebar-layout > div > .main-content {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+    padding: 30px 30px 5px;
+    box-sizing: border-box;
+    transition: width 0.3s ease, margin-left 0.3s ease;
+  }
+
+  .sidebar-layout.sidebar-closed > .main-content,
+  .sidebar-layout.sidebar-closed > div > .main-content {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar-layout > .main-content,
+  .sidebar-layout > div > .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px 20px 5px;
+  }
+}
+
 .analytics-card-grid {
   display: flex;
   flex-wrap: wrap;
@@ -105,4 +131,108 @@
 .bytes-chat-brand--collapsed .bytes-chat-brand__name,
 html.minimenu .bytes-chat-brand__name {
   display: none;
+}
+
+html.app-skin-dark .bytes-chat-brand,
+html.app-skin-dark .bytes-chat-brand:hover,
+html.app-skin-dark .bytes-chat-brand:focus {
+  color: #fff;
+}
+
+html.app-skin-dark .customer-card {
+  border-color: #1b2436;
+}
+
+html.app-skin-dark .customer-card__header {
+  border-bottom-color: #1b2436;
+}
+
+html.app-skin-dark .customer-card__title,
+html.app-skin-dark .customer-person,
+html.app-skin-dark .customer-person:hover {
+  color: #fff;
+}
+
+html.app-skin-dark .customer-card__description,
+html.app-skin-dark .customer-email,
+html.app-skin-dark .customer-contact,
+html.app-skin-dark .customer-date,
+html.app-skin-dark .agent-role {
+  color: #b1b4c0 !important;
+}
+
+html.app-skin-dark .customer-card__count {
+  border-color: #1b2436;
+  background: #121a2d;
+  color: #c5cfff;
+}
+
+html.app-skin-dark .customer-table > :not(caption) > * > * {
+  border-bottom-color: #1b2436;
+}
+
+html.app-skin-dark .customer-table thead th {
+  background: #121a2d;
+}
+
+html.app-skin-dark .customer-table tbody tr:hover {
+  background: #1c2438;
+}
+
+html.app-skin-dark .customer-table .form-check-input {
+  border-color: #4b5568;
+}
+
+html.app-skin-dark .customer-groups-select {
+  border-color: #1b2436;
+  background-color: #121a2d;
+  color: #b1b4c0;
+}
+
+html.app-skin-dark .customer-status-select--success,
+html.app-skin-dark .agent-status-badge--success {
+  border-color: #24583d;
+  background-color: #153323;
+  color: #8ee0ad;
+}
+
+html.app-skin-dark .customer-status-select--warning,
+html.app-skin-dark .agent-status-badge--warning {
+  border-color: #665023;
+  background-color: #352a12;
+  color: #f0ce7c;
+}
+
+html.app-skin-dark .customer-status-select--danger,
+html.app-skin-dark .agent-status-badge--danger {
+  border-color: #69313a;
+  background-color: #3c2026;
+  color: #f2a1aa;
+}
+
+html.app-skin-dark .agent-status-badge--neutral {
+  border-color: #374151;
+  background-color: #202a3a;
+  color: #b1b4c0;
+}
+
+html.app-skin-dark .customer-action.avatar-text {
+  border-color: #1b2436;
+  background-color: #121a2d;
+  color: #b1b4c0;
+}
+
+html.app-skin-dark .customer-action.avatar-text:hover,
+html.app-skin-dark .customer-action.avatar-text:focus-visible {
+  border-color: #526fe5;
+  background-color: #1c2438;
+  color: #c5cfff;
+}
+
+html.app-skin-dark .customer-action-menu {
+  border-color: #1b2436;
+}
+
+html.app-skin-dark .agent-table__empty {
+  color: #b1b4c0 !important;
 }

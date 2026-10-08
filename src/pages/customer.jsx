@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import './customer.css';
 
 const customerList = [
   {
@@ -145,23 +145,24 @@ const getInitials = (name) => name
 const Customer = () => {
   return (
     <>
-      {/* Customer table card */}
-      <div className="main-content">
+      <main className="main-content customer-page">
         <div className="row">
           <div className="col-lg-12">
-            <div className="card stretch stretch-full">
+            <section className="card customer-card">
+              <div className="customer-card__header">
+                <div>
+                  <h1 className="customer-card__title">Customers</h1>
+                  <p className="customer-card__description">View and manage your customer contacts.</p>
+                </div>
+                <span className="customer-card__count">{customerList.length} customers</span>
+              </div>
               <div className="card-body p-0">
-                <div className="table-responsive">
-                  <table className="table table-hover" id="customerList">
+                <div className="table-responsive customer-table-wrap">
+                  <table className="table table-hover customer-table" id="customerList">
                     <thead>
                       <tr>
-                        <th className="wd-30">
-                          <div className="btn-group mb-1">
-                            <div className="custom-control custom-checkbox ms-1">
-                              <input type="checkbox" className="custom-control-input" id="checkAllCustomer" />
-                              <label className="custom-control-label" htmlFor="checkAllCustomer"></label>
-                            </div>
-                          </div>
+                        <th className="customer-table__checkbox">
+                          <input type="checkbox" className="form-check-input" id="checkAllCustomer" aria-label="Select all customers" />
                         </th>
                         <th>Customer</th>
                         <th>Email</th>
@@ -175,42 +176,36 @@ const Customer = () => {
 
                     <tbody>
                       {customerList.map((item) => (
-                        <tr key={item.id} className="single-item">
-                          <td>
-                            <div className="item-checkbox ms-1">
-                              <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input checkbox" id={item.id} />
-                                <label className="custom-control-label" htmlFor={item.id}></label>
-                              </div>
-                            </div>
+                        <tr key={item.id} className="single-item customer-table__row">
+                          <td className="customer-table__checkbox">
+                            <input type="checkbox" className="form-check-input checkbox" id={item.id} aria-label={`Select ${item.name}`} />
                           </td>
 
                           <td>
-                            <a href="customers-view.html" className="hstack gap-3">
+                            <a href="customers-view.html" className="customer-person">
                               {item.avatar ? (
-                                <div className="avatar-image avatar-md">
-                                  <img src={`assets/images/avatar/${item.avatar}`} alt="" className="img-fluid" />
+                                <div className="avatar-image avatar-md customer-person__avatar">
+                                  <img src={`assets/images/avatar/${item.avatar}`} alt={`${item.name}'s avatar`} className="img-fluid" />
                                 </div>
                               ) : (
-                                <div className={`avatar-image avatar-md bg-${item.color || 'info'} text-white`}>
+                                <div className={`avatar-image avatar-md customer-person__avatar customer-person__avatar--${item.color || 'info'}`}>
                                   {getInitials(item.name)}
                                 </div>
                               )}
-                              <div>
-                                <span className="text-truncate-1-line">{item.name}</span>
-                              </div>
+                              <span className="customer-person__name">{item.name}</span>
                             </a>
                           </td>
 
                           <td>
-                            <a href="apps-email.html">{item.email}</a>
+                            <a className="customer-email" href="apps-email.html">{item.email}</a>
                           </td>
 
                           <td>
                             <select
-                              className="form-select form-control max-select"
+                              className="form-select form-control max-select customer-groups-select"
                               data-select2-selector="tag"
                               data-max-select2="tag"
+                              aria-label={`Groups for ${item.name}`}
                               multiple
                               defaultValue={item.selectedGroups}
                             >
@@ -219,7 +214,6 @@ const Customer = () => {
                                   key={tag.value}
                                   value={tag.value}
                                   data-bg={tag.color}
-                                  selected={item.selectedGroups.includes(tag.value)}
                                 >
                                   {tag.label}
                                 </option>
@@ -228,15 +222,20 @@ const Customer = () => {
                           </td>
 
                           <td>
-                            <a href={item.phoneHref}>{item.phone}</a>
+                            <a className="customer-contact" href={item.phoneHref}>{item.phone}</a>
                           </td>
 
-                          <td>{item.date}</td>
+                          <td className="customer-date">{item.date}</td>
 
                           <td>
-                            <select className="form-control" data-select2-selector="status" defaultValue={item.statusValue}>
+                            <select
+                              className={`form-select form-control customer-status-select customer-status-select--${item.statusValue}`}
+                              data-select2-selector="status"
+                              aria-label={`Status for ${item.name}`}
+                              defaultValue={item.statusValue}
+                            >
                               {statusOptions.map((status) => (
-                                <option key={status.value} value={status.value} data-bg={`bg-${status.value}`} selected={status.value === item.statusValue}>
+                                <option key={status.value} value={status.value} data-bg={`bg-${status.value}`}>
                                   {status.label}
                                 </option>
                               ))}
@@ -244,16 +243,16 @@ const Customer = () => {
                           </td>
 
                           <td>
-                            <div className="hstack gap-2 justify-content-end">
-                              <a href="customers-view.html" className="avatar-text avatar-md">
+                            <div className="customer-actions">
+                              <a href="customers-view.html" className="avatar-text avatar-md customer-action" aria-label={`View ${item.name}`}>
                                 <i className="feather feather-eye"></i>
                               </a>
 
                               <div className="dropdown">
-                                <a href="#" className="avatar-text avatar-md" data-bs-toggle="dropdown" data-bs-offset="0,21">
+                                <a href="#" className="avatar-text avatar-md customer-action" aria-label={`More actions for ${item.name}`} data-bs-toggle="dropdown" data-bs-offset="0,21">
                                   <i className="feather feather-more-horizontal"></i>
                                 </a>
-                                <ul className="dropdown-menu">
+                                <ul className="dropdown-menu customer-action-menu">
                                   <li>
                                     <a className="dropdown-item" href="#">
                                       <i className="feather feather-edit-3 me-3"></i>
@@ -302,10 +301,10 @@ const Customer = () => {
                   </table>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 };

@@ -1,0 +1,64 @@
+.agent-table {
+  min-width: 920px;
+}
+
+.agent-role {
+  color: #56657a !important;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.agent-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.agent-status-badge--success {
+  border-color: #ccebd9;
+  background: #effaf3;
+  color: #21834e;
+}
+
+.agent-status-badge--warning {
+  border-color: #f3dfb5;
+  background: #fff8e9;
+  color: #9a6a0a;
+}
+
+.agent-status-badge--danger {
+  border-color: #f2d1d5;
+  background: #fff1f2;
+  color: #bd3b4a;
+}
+
+.agent-status-badge--neutral {
+  border-color: #e2e8f0;
+  background: #f5f7fa;
+  color: #64748b;
+}
+
+.agent-page .customer-action {
+  padding: 0;
+}
+
+.agent-page .customer-action-menu .dropdown-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.agent-table__empty {
+  padding: 2.5rem 1rem !important;
+  color: #7a8798 !important;
+  font-size: 0.875rem;
+  text-align: center;
+}

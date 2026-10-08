@@ -2,7 +2,8 @@ import React from 'react'
 
 const Analytics = () => {
   return (
-    <div className="main-content">
+    <div>
+        <div className="main-content">
       <div className="row">
         <div className="col-12">
           <div className="card stretch stretch-full">
@@ -81,6 +82,9 @@ const Analytics = () => {
         </div>
       </div>
     </div>
+
+    </div>
+  
   );
 };
 
