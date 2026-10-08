@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+import { useAuth } from "../auth/auth_Context";
 
 const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(() => (
-    localStorage.getItem("app-skin") === "app-skin-dark"
-    || document.documentElement.classList.contains("app-skin-dark")
-  ));
+  const { user, logout } = useAuth();
+
+  console.log(user, logout, "user");
+
+  const [isDarkTheme, setIsDarkTheme] = useState(
+    () =>
+      localStorage.getItem("app-skin") === "app-skin-dark" ||
+      document.documentElement.classList.contains("app-skin-dark"),
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle("app-skin-dark", isDarkTheme);
-    localStorage.setItem("app-skin", isDarkTheme ? "app-skin-dark" : "app-skin-light");
+    localStorage.setItem(
+      "app-skin",
+      isDarkTheme ? "app-skin-dark" : "app-skin-light",
+    );
   }, [isDarkTheme]);
 
   return (
@@ -150,10 +159,7 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Leads Report</span>
                         </Link>
-                        <Link
-                          to="/reports-project"
-                          className="dropdown-item"
-                        >
+                        <Link to="/reports-project" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Project Report</span>
                         </Link>
@@ -180,10 +186,7 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal Edit</span>
                         </Link>
-                        <Link
-                          to="/proposal-create"
-                          className="dropdown-item"
-                        >
+                        <Link to="/proposal-create" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Proposal Create</span>
                         </Link>
@@ -206,10 +209,7 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Invoice View</span>
                         </Link>
-                        <Link
-                          to="/invoice-create"
-                          className="dropdown-item"
-                        >
+                        <Link to="/invoice-create" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Invoice Create</span>
                         </Link>
@@ -228,17 +228,11 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers</span>
                         </Link>
-                        <Link
-                          to="/customers-view"
-                          className="dropdown-item"
-                        >
+                        <Link to="/customers-view" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers View</span>
                         </Link>
-                        <Link
-                          to="/customers-create"
-                          className="dropdown-item"
-                        >
+                        <Link to="/customers-create" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Customers Create</span>
                         </Link>
@@ -284,10 +278,7 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Projects View</span>
                         </Link>
-                        <Link
-                          to="/projects-create"
-                          className="dropdown-item"
-                        >
+                        <Link to="/projects-create" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Projects Create</span>
                         </Link>
@@ -306,17 +297,11 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Lists</span>
                         </Link>
-                        <Link
-                          to="/widgets-tables"
-                          className="dropdown-item"
-                        >
+                        <Link to="/widgets-tables" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Tables</span>
                         </Link>
-                        <Link
-                          to="/widgets-charts"
-                          className="dropdown-item"
-                        >
+                        <Link to="/widgets-charts" className="dropdown-item">
                           <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                           <span>Charts</span>
                         </Link>
@@ -719,52 +704,31 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                               <h6 className="dropdown-item-title">
                                 applications
                               </h6>
-                              <Link
-                                to="/chat"
-                                className="dropdown-item"
-                              >
+                              <Link to="/chat" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Chat</span>
                               </Link>
-                              <Link
-                                to="/email"
-                                className="dropdown-item"
-                              >
+                              <Link to="/email" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Email</span>
                               </Link>
-                              <Link
-                                to="/tasks"
-                                className="dropdown-item"
-                              >
+                              <Link to="/tasks" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Tasks</span>
                               </Link>
-                              <Link
-                                to="/notes"
-                                className="dropdown-item"
-                              >
+                              <Link to="/notes" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Notes</span>
                               </Link>
-                              <Link
-                                to="/storage"
-                                className="dropdown-item"
-                              >
+                              <Link to="/storage" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Storage</span>
                               </Link>
-                              <Link
-                                to="/calendar"
-                                className="dropdown-item"
-                              >
+                              <Link to="/calendar" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Calendar</span>
                               </Link>
-                              <Link
-                                to="/contacts"
-                                className="dropdown-item"
-                              >
+                              <Link to="/contacts" className="dropdown-item">
                                 <i className="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                 <span>Contacts</span>
                               </Link>
@@ -3537,11 +3501,24 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                 <button
                   type="button"
                   className={`nxl-head-link me-0 ${isDarkTheme ? "light-button" : "dark-button"}`}
-                  aria-label={isDarkTheme ? "Switch to light theme" : "Switch to dark theme"}
-                  title={isDarkTheme ? "Switch to light theme" : "Switch to dark theme"}
-                  onClick={() => setIsDarkTheme((currentTheme) => !currentTheme)}
+                  aria-label={
+                    isDarkTheme
+                      ? "Switch to light theme"
+                      : "Switch to dark theme"
+                  }
+                  title={
+                    isDarkTheme
+                      ? "Switch to light theme"
+                      : "Switch to dark theme"
+                  }
+                  onClick={() =>
+                    setIsDarkTheme((currentTheme) => !currentTheme)
+                  }
                 >
-                  <i className={isDarkTheme ? "feather-sun" : "feather-moon"} aria-hidden="true"></i>
+                  <i
+                    className={isDarkTheme ? "feather-sun" : "feather-moon"}
+                    aria-hidden="true"
+                  ></i>
                 </button>
               </div>
               <div className="dropdown nxl-h-item">
@@ -3746,13 +3723,13 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                       />
                       <div>
                         <h6 className="text-dark mb-0">
-                          alexandra Della{" "}
+                          {user?.email}
                           <span className="badge bg-soft-success text-success ms-1">
                             PRO
                           </span>
                         </h6>
                         <span className="fs-12 fw-medium text-muted">
-                          alex.della@outlook.com
+                          here is email
                         </span>
                       </div>
                     </div>
@@ -3884,12 +3861,9 @@ const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
                     <span>account Settings</span>
                   </Link>
                   <div className="dropdown-divider"></div>
-                  <Link
-                    to="/auth-login-minimal"
-                    className="dropdown-item"
-                  >
+                  <Link to="/login" className="dropdown-item">
                     <i className="feather-log-out"></i>
-                    <span>Logout</span>
+                    <span onClick={logout}>Logout</span>
                   </Link>
                 </div>
               </div>
