@@ -1,14 +1,27 @@
+
 import { useFormik } from "formik";
 import { z } from "zod";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_Context";
 
-// Zod validation schema
+// Define the login validation schema
 const loginSchema = z.object({
   email: z.string().trim().email("Enter a valid email address."),
   password: z.string().min(1, "Password is required."),
+  confirmPassword: z.string().min(1, "Please confirm your password."),
   rememberMe: z.boolean(),
+}).superRefine((values, context) => {
+  if (
+    values.confirmPassword &&
+    values.password !== values.confirmPassword
+  ) {
+    context.addIssue({
+      code: "custom",
+      message: "Passwords do not match.",
+      path: ["confirmPassword"],
+    });
+  }
 });
 
 const Login = () => {
@@ -19,10 +32,11 @@ const Login = () => {
     initialValues: {
       email: "",
       password: "",
+      confirmPassword: "",
       rememberMe: false,
     },
 
-    // Zod validation
+    // Validate form values using Zod
     validate: (values) => {
       const result = loginSchema.safeParse(values);
 
@@ -43,18 +57,46 @@ const Login = () => {
       return errors;
     },
 
-    // Submit
-    onSubmit: (values, { setSubmitting }) => {
-      console.log("Login Data:", values);
+    // Send login details to the backend
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/auth/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":"application/json",
+            },
+            body: JSON.stringify({
+              email: values.email.trim(),
+              password: values.password,
+            }),
+          }
+        );
 
-      // Save email in Auth Context
-      login(values.email);
+        // Read the response from the backend
+        const data = await response.json();
 
-      // Stop submitting state
-      setSubmitting(false);
+        // Handle login errors
+        if (!response.ok) {
+          throw new Error(data.message || "Invalid email or password.");
+        }
 
-      // Go to dashboard
-      navigate("/dashboard", { replace: true });
+        // Check if the backend returned a token
+        if (!data.token) {
+          throw new Error("Authentication token was not returned.");
+        }
+
+        // Save the user and token in React context
+        login(data.user, data.token);
+
+        // Redirect to the dashboard
+        navigate("/dashboard", { replace: true });
+      } catch (error) {
+        setStatus(error.message || "Login failed.");
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 
@@ -71,8 +113,8 @@ const Login = () => {
               </h4>
 
               <p className="fs-12 fw-medium text-muted">
-                Welcome back to <strong>Nelel</strong> web applications. Log in
-                to continue.
+                Welcome back to <strong>Nelel</strong> web applications.
+                Log in to continue.
               </p>
 
               <form
@@ -128,38 +170,64 @@ const Login = () => {
                   )}
                 </div>
 
-                {/* Remember Me + Forgot Password */}
-                <div className="d-flex align-items-center justify-content-between">
-                  <div>
-                    <div className="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id="rememberMe"
-                        name="rememberMe"
-                        checked={formik.values.rememberMe}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
+                {/* Confirm Password */}
+                <div className="mb-3">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    className={`form-control ${
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    placeholder="Confirm Password"
+                    autoComplete="new-password"
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
 
-                      <label
-                        className="custom-control-label c-pointer"
-                        htmlFor="rememberMe"
-                      >
-                        Remember Me
-                      </label>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Link
-                      to="/forgetpassword"
-                      className="fs-11 text-primary"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
+                  {formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword && (
+                      <div className="invalid-feedback">
+                        {formik.errors.confirmPassword}
+                      </div>
+                    )}
                 </div>
+
+                {/* Remember Me and Forgot Password */}
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id="rememberMe"
+                      name="rememberMe"
+                      checked={formik.values.rememberMe}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+
+                    <label
+                      className="custom-control-label c-pointer"
+                      htmlFor="rememberMe"
+                    >
+                      Remember Me
+                    </label>
+                  </div>
+
+                  <Link to="/forgetpassword" className="fs-11 text-primary">
+                    Forgot password?
+                  </Link>
+                </div>
+
+                {/* Display API errors */}
+                {formik.status && (
+                  <div className="alert alert-danger mt-3">
+                    {formik.status}
+                  </div>
+                )}
 
                 {/* Login Button */}
                 <div className="mt-5">
@@ -168,7 +236,7 @@ const Login = () => {
                     className="btn btn-lg btn-primary w-100"
                     disabled={formik.isSubmitting}
                   >
-                    Login
+                    {formik.isSubmitting ? "Logging in..." : "Login"}
                   </button>
                 </div>
               </form>

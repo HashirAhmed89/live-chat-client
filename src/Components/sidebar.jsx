@@ -67,6 +67,11 @@ const Sidebar = ({ isOpen = true }) => {
               </a>
               <ul className="nxl-submenu">
                 <li className="nxl-item">
+                  <Link className="nxl-link" to="/dashboard">
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nxl-item">
                   <Link className="nxl-link" to="/analytics">
                     Analytics
                   </Link>

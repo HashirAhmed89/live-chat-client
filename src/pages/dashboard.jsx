@@ -1,20 +1,15 @@
-import React from "react";
-import Analytics from "./analytics";
-import Conversation from "./conversation";
-import Ticket from "./ticket";
-import Customer from "./customer";
-import Agent from "./agent";
+const Dashboard = () => (
+  <main className="main-content">
+    <div className="row">
+      <div className="col-12">
+        <div className="card stretch stretch-full">
+          <div className="card-body">
+            <h1 className="h5 mb-1">Dashboard</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+);
 
-const dashboard = () => {
-  return (
-    <>
-      <Analytics />
-      <Conversation />
-      <Ticket />
-      <Customer />
-      <Agent />
-    </>
-  );
-};
-
-export default dashboard;
+export default Dashboard;
