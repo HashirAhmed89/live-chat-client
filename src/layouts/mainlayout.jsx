@@ -1,7 +1,9 @@
 import { useState } from "react";
-import Navbar from "../Components/navbar";
-import { Outlet } from "react-router-dom";
+import Navbar from "../components/navbar";
 import Sidebar from "../Components/sidebar";
+
+import { Outlet } from "react-router-dom";
+
 
 const Mainlayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

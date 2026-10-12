@@ -1,4 +1,6 @@
-const Dashboard = () => (
+
+
+export const Dashboard = () => (
   <main className="main-content">
     <div className="row">
       <div className="col-12">
@@ -11,5 +13,7 @@ const Dashboard = () => (
     </div>
   </main>
 );
+
+
 
 export default Dashboard;

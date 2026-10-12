@@ -3,12 +3,15 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../auth/login";
 import MainLayout from "../layouts/mainlayout";
 
-import Dashboard from "../pages/dashboard";
+
 import Agent from "../pages/agent";
 import Customer from "../pages/customer";
-import Conversation from "../pages/conversation";
+
 import Ticket from "../pages/ticket";
 import Analytics from "../pages/analytics";
+
+import ConversationList from "../pages/listConversation";
+import Dashboard from "../pages/dashboard";
 
 // Public routes
 const publicRoutes = [
@@ -18,12 +21,13 @@ const publicRoutes = [
 
 // Protected page routes
 const protectedRoutes = [
-  { path: "/dashboard", element: <Dashboard /> },
+   {path:"/dashboard",element:<Dashboard/>},
   { path: "/agent", element: <Agent /> },
   { path: "/customer", element: <Customer /> },
-  { path: "/conversation", element: <Conversation /> },
   { path: "/ticket", element: <Ticket /> },
   { path: "/analytics", element: <Analytics /> },
+  { path: "/conversations", element: <ConversationList /> },
+  { path: "/conversations/:id", element: <ConversationList /> },
 ];
 
 const App_Routes = () => {
@@ -40,6 +44,7 @@ const App_Routes = () => {
 
       {/* Dashboard layout and its pages */}
       <Route element={<MainLayout />}>
+
         {protectedRoutes.map((route) => (
           <Route
             key={route.path}

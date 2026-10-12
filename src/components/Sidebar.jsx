@@ -100,8 +100,11 @@ const Sidebar = ({ isOpen = true }) => {
               </Link>
               <ul className="nxl-submenu">
                 <li className="nxl-item">
-                  <Link className="nxl-link" to="/conversation">
-                    Conversations
+                  <Link to="/conversations" className="nxl-link">
+                    <span className="nxl-micon">
+                      <i className="feather-message-square"></i>
+                    </span>
+                    <span className="nxl-mtext">Conversations</span>
                   </Link>
                 </li>
                 <li className="nxl-item">
@@ -109,7 +112,6 @@ const Sidebar = ({ isOpen = true }) => {
                     Tickets
                   </Link>
                 </li>
-              
               </ul>
             </li>
             <li
