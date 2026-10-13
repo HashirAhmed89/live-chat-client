@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import ProtectedRoutes from "../auth/protected_Routes";
 
 import Login from "../auth/login";
 import MainLayout from "../layouts/mainlayout";
@@ -42,16 +43,17 @@ const App_Routes = () => {
         />
       ))}
 
-      {/* Dashboard layout and its pages */}
-      <Route element={<MainLayout />}>
-
-        {protectedRoutes.map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
+      {/* Require a saved login before rendering the dashboard layout and pages. */}
+      <Route element={<ProtectedRoutes />}>
+        <Route element={<MainLayout />}>
+          {protectedRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.element}
+            />
+          ))}
+        </Route>
       </Route>
     </Routes>
   );

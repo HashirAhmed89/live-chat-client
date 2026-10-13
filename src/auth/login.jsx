@@ -1,4 +1,3 @@
-
 import { useFormik } from "formik";
 import { z } from "zod";
 import "./login.css";
@@ -6,23 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_Context";
 
 // Define the login validation schema
-const loginSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
-  password: z.string().min(1, "Password is required."),
-  confirmPassword: z.string().min(1, "Please confirm your password."),
-  rememberMe: z.boolean(),
-}).superRefine((values, context) => {
-  if (
-    values.confirmPassword &&
-    values.password !== values.confirmPassword
-  ) {
-    context.addIssue({
-      code: "custom",
-      message: "Passwords do not match.",
-      path: ["confirmPassword"],
-    });
-  }
-});
+const loginSchema = z
+  .object({
+    email: z.string().trim().email("Enter a valid email address."),
+    password: z.string().min(1, "Password is required."),
+    confirmPassword: z.string().min(1, "Please confirm your password."),
+    rememberMe: z.boolean(),
+  })
+  .superRefine((values, context) => {
+    if (values.confirmPassword && values.password !== values.confirmPassword) {
+      context.addIssue({
+        code: "custom",
+        message: "Passwords do not match.",
+        path: ["confirmPassword"],
+      });
+    }
+  });
 
 const Login = () => {
   const { login } = useAuth();
@@ -60,19 +58,16 @@ const Login = () => {
     // Send login details to the backend
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/auth/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":"application/json",
-            },
-            body: JSON.stringify({
-              email: values.email.trim(),
-              password: values.password,
-            }),
-          }
-        );
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: values.email.trim(),
+            password: values.password,
+          }),
+        });
 
         // Read the response from the backend
         const data = await response.json();
@@ -108,13 +103,11 @@ const Login = () => {
             <div className="card-body p-sm-5">
               <h2 className="fs-20 fw-bolder mb-4">Login</h2>
 
-              <h4 className="fs-13 fw-bold mb-2">
-                Login to your account
-              </h4>
+              <h4 className="fs-13 fw-bold mb-2">Login to your account</h4>
 
               <p className="fs-12 fw-medium text-muted">
-                Welcome back to <strong>Nelel</strong> web applications.
-                Log in to continue.
+                Welcome back to <strong>Nelel</strong> web applications. Log in
+                to continue.
               </p>
 
               <form
@@ -224,9 +217,7 @@ const Login = () => {
 
                 {/* Display API errors */}
                 {formik.status && (
-                  <div className="alert alert-danger mt-3">
-                    {formik.status}
-                  </div>
+                  <div className="alert alert-danger mt-3">{formik.status}</div>
                 )}
 
                 {/* Login Button */}

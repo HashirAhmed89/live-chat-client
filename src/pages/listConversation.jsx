@@ -62,25 +62,18 @@ const ConversationItem = ({ item, onClick, isSelected }) => (
             <i className="feather-more-vertical"></i>
           </a>
           <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-check-circle me-3"></i><span>Make as Read</span></a></li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-star me-3"></i><span>Add to Favorite</span></a></li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-bell-off me-3"></i><span>Mute Notifications</span></a></li>
-            <li className="dropdown-divider"></li>
             <li>
-              <a href="javascript:void(0)" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#voiceCallingModalScreen">
-                <i className="feather-phone-call me-3"></i><span>Audio Call</span>
+              <a href="javascript:void(0)" className="dropdown-item">
+                <i className="feather-check-circle me-3"></i>
+                <span>Mark as Read/Unread</span>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#videoCallingModalScreen">
-                <i className="feather-video me-3"></i><span>Video Call</span>
+              <a href="javascript:void(0)" className="dropdown-item">
+                <i className="feather-trash-2 me-3"></i>
+                <span>Delete Conversation</span>
               </a>
             </li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-mail me-3"></i><span>Send eMail</span></a></li>
-            <li className="dropdown-divider"></li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-alert-triangle me-3"></i><span>Report Chat</span></a></li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-trash-2 me-3"></i><span>Delete Chat</span></a></li>
-            <li><a href="javascript:void(0)" className="dropdown-item"><i className="feather-archive me-3"></i><span>Archive Chat</span></a></li>
           </ul>
         </div>
       </div>
@@ -138,17 +131,16 @@ const ConversationList = () => {
                       {" "}Newest{" "}
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                      <li><a href="javascript:void(0)" className="dropdown-item">Oldest</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item active">Newest</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Replied</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Snoozed</a></li>
-                      <li className="dropdown-divider"></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Ascending</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Descending</a></li>
-                      <li className="dropdown-divider"></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Mute Conversion</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Block Conversion</a></li>
-                      <li><a href="javascript:void(0)" className="dropdown-item">Delete Conversion</a></li>
+                      <li>
+                        <a href="javascript:void(0)" className="dropdown-item active">
+                          Newest
+                        </a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)" className="dropdown-item">
+                          Blocked Conversations
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>

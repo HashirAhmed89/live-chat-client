@@ -4,8 +4,10 @@ import zipFileIcon from "../assets copy/images/file-icons/zip.png";
 import pngFileIcon from "../assets copy/images/file-icons/png.png";
 import psdFileIcon from "../assets copy/images/file-icons/psd.png";
 import { Link, useParams } from "react-router-dom";
+import { useConversation } from "../conversation_Context/conversationcontext";
 
 const ChatWindow = () => {
+  const {selectedConversation}= useConversation()
   const { id } = useParams();
   const conversation = null;
   void id;
@@ -39,7 +41,7 @@ const ChatWindow = () => {
                       </div>
                       <div className="d-none d-sm-block">
                         <div className="fw-bold d-flex align-items-center">
-                          {/* <h4>{conversation?.name}</h4> */}
+                          <h4>{selectedConversation?.name || "select a conversation"}</h4>
                         </div>
                         <div className="d-flex align-items-center mt-1">
                           <span className="wd-7 ht-7 rounded-circle opacity-75 me-2 bg-success"></span>
@@ -195,13 +197,13 @@ const ChatWindow = () => {
                         />
                       </a>
                       <div className="d-flex align-items-center gap-2">
-                        <Link to="javascript:void(0);">{conversation?.name} </Link>
+                        <Link to="javascript:void(0);">{selectedConversation?.name} </Link>
                         <span className="wd-5 ht-5 bg-gray-400 rounded-circle"></span>
-                        <span className="fs-11 text-muted">{conversation?.updatedAt}</span>
+                        <span className="fs-11 text-muted">{selectedConversation?.updatedAt}</span>
                       </div>
                     </div>
                     <div className="wd-500 p-3 rounded-5 bg-gray-200">
-                      <p className="py-2 px-3 rounded-5 bg-white">{conversation?.message}</p>
+                      <p className="py-2 px-3 rounded-5 bg-white">{selectedConversation?.message}</p>
                       <p className="py-2 px-3 rounded-5 bg-white mb-0">
                        
                       </p>
