@@ -1,35 +1,54 @@
-import avatar1 from "../assets copy/images/avatar/1.png";
-import avatar2 from "../assets copy/images/avatar/2.png";
-import avatar10 from "../assets copy/images/avatar/10.png";
-import avatar11 from "../assets copy/images/avatar/11.png";
-import avatar12 from "../assets copy/images/avatar/12.png";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useConversation } from "../conversation_Context/conversationcontext";
+import useConversation from "../../hooks/useConversation"; // custom hook (selected conversation store)
+import avatar10 from "../../assets/images/avatar/10.png"; // default user image
 
 const ConversationList = () => {
+  // Stores all conversations that come from the API
+  const [conversationList, setConversationList] = useState([]);
 
-  const [conversationList, setConversationList] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const {setSelectedConversation} = useConversation()
+  // Stores the text typed in the search box
+  const [searchTerm, setSearchTerm] = useState("");
 
+  // Used to save the clicked conversation globally
+  const { setSelectedConversation } = useConversation();
+
+  // Used to move to another page
+  const navigate = useNavigate();
+
+  // This runs one time when the page loads
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/conversations",
-          {
-            method: "GET",
+        // Call the API to get all conversations
+        const response = await fetch("http://localhost:3000/api/conversations", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // If your API needs a token, uncomment the line below:
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        );
+        });
 
+        // If the server sends an error status (like 404 or 500), stop here
         if (!response.ok) {
-          throw new Error("Failed to fetch conversations");
+          throw new Error(`Failed to fetch conversations (status ${response.status})`);
         }
 
-        const conversations = await response.json();
+        const data = await response.json();
+
+        // Check what the API returned (helps in debugging)
+        console.log("API response:", data);
+
+        // Make sure we always save an array in state
+        // Some APIs send [ ... ] and some send { conversations: [ ... ] }
+        const conversations = Array.isArray(data)
+          ? data
+          : data.conversations || data.data || [];
+
         setConversationList(conversations);
       } catch (error) {
+        // Show the error in the console
         console.error("Error fetching conversations:", error);
       }
     };
@@ -37,18 +56,18 @@ const ConversationList = () => {
     fetchConversations();
   }, []);
 
-  // Filter conversations by customer name
+  // Filter conversations by customer name (search box)
   const filteredConversation = conversationList.filter((conversation) =>
     conversation.name?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleConversationClick = (conversation)=>{
-    setSelectedConversation(conversation)
-    navigate(`/dashboard/conversation/${conversation.id}`)
-
-  }
-
-  const navigate = useNavigate();
+  // When a conversation is clicked:
+  // 1. save it in global state
+  // 2. open its chat page
+  const handleConversationClick = (conversation) => {
+    setSelectedConversation(conversation);
+    navigate(`/dashboard/conversation/${conversation.id}`);
+  };
 
   return (
     <div>
@@ -60,6 +79,7 @@ const ConversationList = () => {
               className="content-sidebar content-sidebar-xl"
               data-scrollbar-target="#psScrollbarInit"
             >
+              {/* ---------- Sidebar header (title + close button) ---------- */}
               <div className="content-sidebar-header bg-white sticky-top hstack justify-content-between">
                 <h4 className="fw-bolder mb-0">Chat</h4>
                 <a
@@ -69,8 +89,11 @@ const ConversationList = () => {
                   <i className="feather-x"></i>
                 </a>
               </div>
+
               <div className="content-sidebar-body">
+                {/* ---------- Search box and filter dropdown ---------- */}
                 <div className="py-0 px-4 d-flex align-items-center justify-content-between border-bottom">
+                  {/* Search input: updates searchTerm on every key press */}
                   <form className="sidebar-search">
                     <input
                       type="search"
@@ -81,6 +104,8 @@ const ConversationList = () => {
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                   </form>
+
+                  {/* Filter dropdown (Newest / Blocked) */}
                   <div className="dropdown sidebar-filter">
                     <a
                       href="javascript:void(0)"
@@ -108,15 +133,15 @@ const ConversationList = () => {
                     </ul>
                   </div>
                 </div>
+
+                {/* ---------- Conversation list ---------- */}
                 <div className="content-sidebar-items">
+                  {/* Show one row for each conversation (after search filter) */}
                   {filteredConversation?.map((conversation) => (
-                    // Render each conversation from the array
                     <div
                       key={conversation.id}
                       className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                      onClick={() =>
-                        handleConversationClick(conversation)
-                      }
+                      onClick={() => handleConversationClick(conversation)}
                     >
                       {/* User avatar */}
                       <div className="avatar-image">
@@ -129,9 +154,9 @@ const ConversationList = () => {
 
                       {/* Conversation details */}
                       <div className="ms-3 item-desc flex-grow-1">
-                        {/* User name and dropdown */}
+                        {/* Top row: name, status, time, and menu */}
                         <div className="w-100 d-flex align-items-center justify-content-between">
-                          {/* User information */}
+                          {/* User name + online dot + last active time */}
                           <a
                             href="#"
                             onClick={(event) => event.preventDefault()}
@@ -139,16 +164,17 @@ const ConversationList = () => {
                           >
                             <span>{conversation.name}</span>
 
-                            {/* Online status */}
+                            {/* Green dot = online status */}
                             <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
 
-                            {/* Last active time */}
+                            {/* Last active time (static text for now) */}
                             <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
                               2 min ago
                             </span>
                           </a>
 
-                          {/* Dropdown menu */}
+                          {/* Three-dot menu */}
+                          {/* stopPropagation: clicking the menu should NOT open the conversation */}
                           <div
                             className="dropdown"
                             onClick={(event) => event.stopPropagation()}
@@ -164,13 +190,19 @@ const ConversationList = () => {
 
                             <ul className="dropdown-menu dropdown-menu-end overflow-auto">
                               <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
+                                <a
+                                  href="javascript:void(0)"
+                                  className="dropdown-item"
+                                >
                                   <i className="feather-check-circle me-3"></i>
                                   <span>Mark as Read/Unread</span>
                                 </a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
+                                <a
+                                  href="javascript:void(0)"
+                                  className="dropdown-item"
+                                >
                                   <i className="feather-trash-2 me-3"></i>
                                   <span>Delete Conversation</span>
                                 </a>
@@ -179,432 +211,17 @@ const ConversationList = () => {
                           </div>
                         </div>
 
-                        {/* Latest message preview */}
+                        {/* Latest message preview (max 2 lines) */}
                         <p className="fs-12 fw-semibold text-dark mt-2 mb-0 text-truncate-2-line">
                           {conversation.message}
                         </p>
                       </div>
                     </div>
                   ))}
-
-                  {/* <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/2")}
-                  >
-                    <div className="bg-success text-white avatar-text">N</div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Norman Byrd</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-danger"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            5 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 fw-semibold text-dark mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/3")}
-                  >
-                    <div className="avatar-image">
-                      <img src={avatar11} className="img-fluid" alt="image" />
-                    </div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Laura Foreman</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            7 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/4")}
-                  >
-                    <div className="bg-warning text-white avatar-text">B</div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Bryan Waters</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-gray-500"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            10 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/5")}
-                  >
-                    <div className="avatar-image">
-                      <img src={avatar12} className="img-fluid" alt="image" />
-                    </div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Ursula Sanders</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            9 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/6")}
-                  >
-                    <div className="bg-danger text-white avatar-text">E</div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Edward Andrade</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            13 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/7")}
-                  >
-                    <div className="avatar-image">
-                      <img src={avatar1} className="img-fluid" alt="image" />
-                    </div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Alexandra Della</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            15 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/8")}
-                  >
-                    <div className="bg-gray-200 text-dark avatar-text">T</div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Timothy Boyd</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            13 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <div
-                    className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                    onClick={() => navigate("/dashboard/conversations/9")}
-                  >
-                    <div className="avatar-image">
-                      <img src={avatar2} className="img-fluid" alt="image" />
-                    </div>
-                    <div className="ms-3 item-desc">
-                      <div className="w-100 d-flex align-items-center justify-content-between">
-                        <a
-                          href="javascript:void(0);"
-                          className="hstack gap-2 me-2"
-                        >
-                          <span>Curtis Green</span>
-                          <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-                          <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                            20 min ago
-                          </span>
-                        </a>
-                        <div
-                          className="dropdown"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <a
-                            href="javascript:void(0)"
-                            className="avatar-text avatar-sm"
-                            data-bs-toggle="dropdown"
-                          >
-                            <i className="feather-more-vertical"></i>
-                          </a>
-                          <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="javascript:void(0)" className="dropdown-item">
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                        </div>
-                      </div>
-                      <p className="fs-12 text-muted mt-2 mb-0 text-truncate-2-line">
-                        Lorem ipsum dolor sit amet, consec tetuer adipi scing
-                        elit aenean commodo ipsum dolor sit amet, consec tetuer
-                        adipi scing elit aenean commodo
-                      </p>
-                    </div>
-                  </div> */}
                 </div>
               </div>
+
+              {/* ---------- Footer: Load More button ---------- */}
               <a
                 href="javascript:void(0);"
                 className="content-sidebar-footer px-4 py-3 fs-11 text-uppercase d-block text-center"
