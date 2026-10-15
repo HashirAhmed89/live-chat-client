@@ -1,239 +1,290 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useConversation from "../../hooks/useConversation"; // custom hook (selected conversation store)
-import avatar10 from "../../assets/images/avatar/10.png"; // default user image
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../auth/auth_Context";
+import avatar10 from "../assets copy/images/avatar/10.png";
+import ChatWindow from "./ChatWindow";
+
+// Get conversation ID from API data
+const getConversationId = (conversation) => {
+  return conversation._id || conversation.id;
+};
+
+// Get customer's name
+const getCustomerName = (conversation) => {
+  return (
+    conversation.customerId?.name ||
+    conversation.customer?.name ||
+    conversation.customerName ||
+    conversation.name ||
+    "Customer"
+  );
+};
+
+// Get the latest message to show in the conversation list
+const getLastMessage = (conversation) => {
+  const messages = Array.isArray(conversation.messages)
+    ? conversation.messages
+    : [];
+
+  const message =
+    conversation.lastMessage ||
+    messages[messages.length - 1] ||
+    conversation.message;
+
+  if (typeof message === "string") {
+    return message;
+  }
+
+  return (
+    message?.content ||
+    message?.text ||
+    message?.message ||
+    "No messages yet."
+  );
+};
+
+// Extract conversations from the API response
+const getConversationArray = (data) => {
+  if (Array.isArray(data)) return data;
+
+  if (Array.isArray(data?.conversation)) {
+    return data.conversation;
+  }
+
+  if (Array.isArray(data?.conversations)) {
+    return data.conversations;
+  }
+
+  if (Array.isArray(data?.data)) {
+    return data.data;
+  }
+
+  if (Array.isArray(data?.data?.conversation)) {
+    return data.data.conversation;
+  }
+
+  if (Array.isArray(data?.data?.conversations)) {
+    return data.data.conversations;
+  }
+
+  // Show an error if the response does not contain a list
+  throw new Error("Invalid conversations API response.");
+};
 
 const ConversationList = () => {
-  // Stores all conversations that come from the API
-  const [conversationList, setConversationList] = useState([]);
-
-  // Stores the text typed in the search box
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Used to save the clicked conversation globally
-  const { setSelectedConversation } = useConversation();
-
-  // Used to move to another page
   const navigate = useNavigate();
 
-  // This runs one time when the page loads
-  useEffect(() => {
-    const fetchConversations = async () => {
-      try {
-        // Call the API to get all conversations
-        const response = await fetch("http://localhost:3000/api/conversations", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // If your API needs a token, uncomment the line below:
-            // Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+  // Get conversation ID from the URL
+  const { id } = useParams();
 
-        // If the server sends an error status (like 404 or 500), stop here
-        if (!response.ok) {
-          throw new Error(`Failed to fetch conversations (status ${response.status})`);
-        }
+  // Get login token from authentication context
+  const { token } = useAuth();
+
+  // Store all conversations
+  const [conversations, setConversations] = useState([]);
+
+  // Store text entered in the search box
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Track loading and errors
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Fetch conversations when the token changes
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchConversations = async () => {
+      // User must be logged in
+      if (!token) {
+        setError("Please log in to view conversations.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Send request to backend
+        const response = await fetch(
+          "http://localhost:3000/api/conversations",
+          {
+            headers: {
+              "x-api-key": token,
+            },
+            signal: controller.signal,
+          }
+        );
 
         const data = await response.json();
 
-        // Check what the API returned (helps in debugging)
-        console.log("API response:", data);
+        // Check if the API request failed
+        if (!response.ok) {
+          throw new Error(
+            data?.message || "Failed to load conversations."
+          );
+        }
 
-        // Make sure we always save an array in state
-        // Some APIs send [ ... ] and some send { conversations: [ ... ] }
-        const conversations = Array.isArray(data)
-          ? data
-          : data.conversations || data.data || [];
-
-        setConversationList(conversations);
-      } catch (error) {
-        // Show the error in the console
-        console.error("Error fetching conversations:", error);
+        // Save conversations in state
+        setConversations(getConversationArray(data));
+        setError("");
+      } catch (err) {
+        // Ignore errors caused by cancelling the request
+        if (err.name !== "AbortError") {
+          setError(err.message || "Failed to load conversations.");
+          console.error("Failed to load conversations:", err);
+        }
+      } finally {
+        // Stop loading when the request finishes
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchConversations();
-  }, []);
 
-  // Filter conversations by customer name (search box)
-  const filteredConversation = conversationList.filter((conversation) =>
-    conversation.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+    // Cancel the request if the effect is cleaned up
+    return () => controller.abort();
+  }, [token]);
+
+  // Filter conversations by customer name
+  const filteredConversations = conversations.filter((conversation) =>
+    getCustomerName(conversation)
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
-  // When a conversation is clicked:
-  // 1. save it in global state
-  // 2. open its chat page
-  const handleConversationClick = (conversation) => {
-    setSelectedConversation(conversation);
-    navigate(`/dashboard/conversation/${conversation.id}`);
+  // Open the clicked conversation
+  const openConversation = (conversation) => {
+    const conversationId = getConversationId(conversation);
+
+    if (conversationId) {
+      navigate(`/conversations/${conversationId}`);
+    }
   };
 
+  // Find the conversation selected in the URL
+  const selectedConversation = conversations.find(
+    (conversation) =>
+      String(getConversationId(conversation)) === String(id)
+  );
+
   return (
-    <div>
-      <main className="nxl-container apps-container apps-chat">
-        <div className="nxl-content without-header nxl-full-content">
-          {/* [ Main Content ] start */}
-          <div className="main-content d-flex">
-            <div
-              className="content-sidebar content-sidebar-xl"
-              data-scrollbar-target="#psScrollbarInit"
-            >
-              {/* ---------- Sidebar header (title + close button) ---------- */}
-              <div className="content-sidebar-header bg-white sticky-top hstack justify-content-between">
-                <h4 className="fw-bolder mb-0">Chat</h4>
-                <a
-                  href="javascript:void(0);"
-                  className="app-sidebar-close-trigger d-flex"
-                >
-                  <i className="feather-x"></i>
-                </a>
-              </div>
+    <main
+      className={`nxl-container apps-container apps-chat conversation-page${
+        id ? " conversation-page--selected" : ""
+      }`}
+    >
+      <div className="nxl-content without-header nxl-full-content">
+        <div className="main-content d-flex conversation-page__layout">
 
-              <div className="content-sidebar-body">
-                {/* ---------- Search box and filter dropdown ---------- */}
-                <div className="py-0 px-4 d-flex align-items-center justify-content-between border-bottom">
-                  {/* Search input: updates searchTerm on every key press */}
-                  <form className="sidebar-search">
-                    <input
-                      type="search"
-                      className="py-3 px-0 border-0"
-                      id="chattingSearch"
-                      placeholder="Search..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </form>
+          {/* Left side: Conversation list */}
+          <aside className="content-sidebar content-sidebar-xl">
 
-                  {/* Filter dropdown (Newest / Blocked) */}
-                  <div className="dropdown sidebar-filter">
-                    <a
-                      href="javascript:void(0)"
-                      data-bs-toggle="dropdown"
-                      className="d-flex align-items-center justify-content-center dropdown-toggle"
-                      data-bs-offset="0, 15"
-                    >
-                      {" "}
-                      Newest{" "}
-                    </a>
-                    <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                      <li>
-                        <a
-                          href="javascript:void(0)"
-                          className="dropdown-item active"
-                        >
-                          Newest
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)" className="dropdown-item">
-                          Blocked Conversations
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+            {/* Sidebar heading */}
+            <div className="content-sidebar-header bg-white sticky-top">
+              <h4 className="fw-bolder mb-0">Chat</h4>
+            </div>
 
-                {/* ---------- Conversation list ---------- */}
-                <div className="content-sidebar-items">
-                  {/* Show one row for each conversation (after search filter) */}
-                  {filteredConversation?.map((conversation) => (
+            {/* Search box */}
+            <div className="p-4 border-bottom">
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Search conversations..."
+                value={searchTerm}
+                onChange={(event) =>
+                  setSearchTerm(event.target.value)
+                }
+              />
+            </div>
+
+            {/* Show loading, error, empty state, or conversations */}
+            <div className="content-sidebar-items">
+              {loading ? (
+                <p className="p-4">Loading conversations...</p>
+              ) : error ? (
+                <p className="p-4 text-danger" role="alert">
+                  {error}
+                </p>
+              ) : filteredConversations.length === 0 ? (
+                <p className="p-4 text-muted">
+                  No conversations found.
+                </p>
+              ) : (
+                filteredConversations.map((conversation) => {
+                  const conversationId =
+                    getConversationId(conversation);
+
+                  const name = getCustomerName(conversation);
+
+                  const isSelected =
+                    String(conversationId) === String(id);
+
+                  return (
                     <div
-                      key={conversation.id}
-                      className="p-4 d-flex position-relative border-bottom c-pointer single-item"
-                      onClick={() => handleConversationClick(conversation)}
+                      key={conversationId}
+                      className={`p-4 d-flex border-bottom c-pointer single-item ${
+                        isSelected ? "bg-light" : ""
+                      }`}
+                      onClick={() =>
+                        openConversation(conversation)
+                      }
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(event) => {
+                        if (
+                          event.key === "Enter" ||
+                          event.key === " "
+                        ) {
+                          event.preventDefault();
+                          openConversation(conversation);
+                        }
+                      }}
                     >
-                      {/* User avatar */}
+                      {/* Customer avatar */}
                       <div className="avatar-image">
                         <img
-                          src={avatar10}
+                          src={
+                            conversation.customer?.avatar ||
+                            conversation.avatar ||
+                            avatar10
+                          }
                           className="img-fluid"
-                          alt="User avatar"
+                          alt={name}
                         />
                       </div>
 
-                      {/* Conversation details */}
-                      <div className="ms-3 item-desc flex-grow-1">
-                        {/* Top row: name, status, time, and menu */}
-                        <div className="w-100 d-flex align-items-center justify-content-between">
-                          {/* User name + online dot + last active time */}
-                          <a
-                            href="#"
-                            onClick={(event) => event.preventDefault()}
-                            className="hstack gap-2 me-2"
-                          >
-                            <span>{conversation.name}</span>
+                      {/* Customer name and last message */}
+                      <div className="ms-3 flex-grow-1">
+                        <span>{name}</span>
 
-                            {/* Green dot = online status */}
-                            <div className="wd-5 ht-5 rounded-circle opacity-75 me-1 bg-success"></div>
-
-                            {/* Last active time (static text for now) */}
-                            <span className="fs-10 fw-medium text-muted text-uppercase d-none d-sm-block">
-                              2 min ago
-                            </span>
-                          </a>
-
-                          {/* Three-dot menu */}
-                          {/* stopPropagation: clicking the menu should NOT open the conversation */}
-                          <div
-                            className="dropdown"
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            <a
-                              href="#"
-                              className="avatar-text avatar-sm"
-                              data-bs-toggle="dropdown"
-                              onClick={(event) => event.preventDefault()}
-                            >
-                              <i className="feather-more-vertical"></i>
-                            </a>
-
-                            <ul className="dropdown-menu dropdown-menu-end overflow-auto">
-                              <li>
-                                <a
-                                  href="javascript:void(0)"
-                                  className="dropdown-item"
-                                >
-                                  <i className="feather-check-circle me-3"></i>
-                                  <span>Mark as Read/Unread</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="javascript:void(0)"
-                                  className="dropdown-item"
-                                >
-                                  <i className="feather-trash-2 me-3"></i>
-                                  <span>Delete Conversation</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        {/* Latest message preview (max 2 lines) */}
-                        <p className="fs-12 fw-semibold text-dark mt-2 mb-0 text-truncate-2-line">
-                          {conversation.message}
+                        <p className="fs-12 mt-2 mb-0 text-muted text-truncate">
+                          {getLastMessage(conversation)}
                         </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* ---------- Footer: Load More button ---------- */}
-              <a
-                href="javascript:void(0);"
-                className="content-sidebar-footer px-4 py-3 fs-11 text-uppercase d-block text-center"
-              >
-                Load More
-              </a>
+                  );
+                })
+              )}
             </div>
-          </div>
-          {/* [ Main Content ] end */}
+          </aside>
+
+          {/* Right side: Selected conversation chat */}
+          {selectedConversation ? (
+            <ChatWindow
+              selectedConversation={selectedConversation}
+            />
+          ) : (
+            <section className="content-area conversation-chat-window">
+              <div className="conversation-empty-state">
+                Select a conversation to view messages.
+              </div>
+            </section>
+          )}
+
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
 

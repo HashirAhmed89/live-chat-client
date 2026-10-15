@@ -10,29 +10,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Conversation = () => {
-//   const [conversation, setConversation] = useState(null);
-//   useEffect(() => {
-//     const fetchedConversation = async () => {
-//       try {
-//         const response = await fetch(
-//           "http://localhost:3000/api/conversations",
-//           {
-//             method: "GET",
-//           },
-//         );
 
-//         const data = await response.json();
-
-//         console.log(data);
-
-//         // setConversations(data.conversations);
-//       } catch (error) {
-//         console.error("Error fetching conversations:", error);
-//       }
-//     };
-
-//     fetchedConversation();
-//   }, []);
 
   return (
     <>

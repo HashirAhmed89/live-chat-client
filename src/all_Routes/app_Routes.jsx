@@ -11,7 +11,7 @@ import Customer from "../pages/customer";
 import Ticket from "../pages/ticket";
 import Analytics from "../pages/analytics";
 
-import ConversationList from "../pages/listConversation";
+import ConversationList from "../components/ConversationList";
 import Dashboard from "../pages/dashboard";
 
 // Public routes
