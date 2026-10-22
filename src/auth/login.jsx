@@ -3,6 +3,7 @@ import { z } from "zod";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_Context";
+import { connectSocket, disconnectSocket } from "../sockets/socket";
 
 // Define the login validation schema
 const loginSchema = z
@@ -72,23 +73,60 @@ const Login = () => {
         // Read the response from the backend
         const data = await response.json();
 
-        // Handle login errors
         if (!response.ok) {
-          throw new Error(data.message || "Invalid email or password.");
+          const message = data.message || "Invalid email or password.";
+          console.error("Login API rejected the request.", {
+            status: response.status,
+            message,
+          });
+          setStatus(message);
+          return;
         }
 
-        // Check if the backend returned a token
-        if (!data.token) {
-          throw new Error("Authentication token was not returned.");
+        if (!data.token || !data.user) {
+          throw new Error("The login response did not include a user and token.");
         }
 
-        // Save the user and token in React context
+        try {
+          const socket = connectSocket(data.token);
+          if (!socket.connected) {
+            await new Promise((resolve, reject) => {
+              const handleConnect = () => {
+                socket.off("connect_error", handleConnectError);
+                resolve();
+              };
+              const handleConnectError = (error) => {
+                socket.off("connect", handleConnect);
+                reject(error);
+              };
+
+              socket.once("connect", handleConnect);
+              socket.once("connect_error", handleConnectError);
+            });
+          }
+        } catch (error) {
+          disconnectSocket();
+          console.error("Socket.IO connection failed after login succeeded:", error);
+          setStatus(
+            `Login succeeded, but the real-time connection failed: ${
+              error.message || "Socket authentication failed."
+            }`
+          );
+          return;
+        }
+
+        // Save the authenticated session only after the socket connects.
         login(data.user, data.token);
 
         // Redirect to the dashboard
         navigate("/dashboard", { replace: true });
       } catch (error) {
-        setStatus(error.message || "Login failed.");
+        console.error("Login API request failed:", error);
+        setStatus(
+          error instanceof TypeError
+            ? "Unable to reach the login server. Check that the backend is running and allows this frontend origin."
+            : error.message || "Login failed."
+        );
       } finally {
         setSubmitting(false);
       }

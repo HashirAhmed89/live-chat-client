@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { connectSocket, disconnectSocket } from "../sockets/socket";
 
 const AuthContext = createContext(null);
 
@@ -9,6 +10,15 @@ export const AuthProvider = ({ children }) => {
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const [token, setToken] = useState(() => sessionStorage.getItem("token"));
+
+  useEffect(() => {
+    if (token) {
+      // Restore the shared socket when an authenticated session survives a reload.
+      connectSocket(token);
+    } else {
+      disconnectSocket();
+    }
+  }, [token]);
 
   const login = (userData, authToken) => {
     setUser(userData);
