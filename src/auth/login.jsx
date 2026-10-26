@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_Context";
 import { connectSocket, disconnectSocket } from "../sockets/socket";
 
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:3000"
+).replace(/\/$/, "");
+
 // Define the login validation schema
 const loginSchema = z
   .object({
@@ -59,7 +63,7 @@ const Login = () => {
     // Send login details to the backend
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        const response = await fetch("http://localhost:3000/api/auth/login", {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

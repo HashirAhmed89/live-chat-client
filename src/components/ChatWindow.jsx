@@ -3,188 +3,89 @@ import { useAuth } from "../auth/auth_Context";
 import { useConversation } from "../conversation_Context/conversationcontext";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSocket } from "../sockets/socket";
-import ChatHeader from "../components/chat/ChatHeader"
+import ChatHeader from "../components/chat/ChatHeader";
 import MessageEditor from "./chat/MessageEditor";
 import MessageItem from "./chat/MessageItem";
+import {
+  getId,
+  getMessages,
+  unwrapData,
+  unwrapEvent,
+  getMessageKey,
+  mergeMessages,
+  isAgentMessage,
+} from "./utils/chatWindow.utils";
+import {
+  fetchConversationMessages,
+  postAgentReply,
+} from "./services/chatWindow.service";
 
-const API_BASE_URL = (
-  import.meta.env.VITE_API_URL || "http://localhost:3000"
-).replace(/\/$/, "");
-
-const getConversationMessages = (conversation) => {
-  if (Array.isArray(conversation?.messages)) return conversation.messages;
-  if (conversation?.message) return [conversation.message];
-  return [];
-};
-
-const getMessagesFromResponse = (data) => {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data?.data)) return data.data;
-
-  const messages =
-    data?.messages ??
-    data?.conversation?.messages ??
-    data?.data?.messages ??
-    data?.data?.conversation?.messages ??
-    data?.result?.messages;
-
-  if (Array.isArray(messages)) return messages;
-
-  const message =
-    data?.message ??
-    data?.conversation?.message ??
-    data?.data?.message ??
-    data?.data?.conversation?.message;
-
-  return message ? [message] : [];
-};
-
-const unwrapResponseData = (data) =>
-  data?.data && typeof data.data === "object" ? data.data : data;
-
-const unwrapEventData = (event) => {
-  let data = event;
-
-  for (let depth = 0; depth < 2; depth += 1) {
-    if (!data?.data || typeof data.data !== "object") break;
-    data = data.data;
-  }
-
-  return data;
-};
-
-const normalizeId = (value) => {
-  if (value == null) return "";
-  return String(value?._id ?? value?.id ?? value);
-};
-
-const getMessageKey = (message) => {
-  if (message == null) return String(message);
-  if (typeof message !== "object") return `${typeof message}:${message}`;
-
-  const messageId = message._id ?? message.id ?? message.messageId;
-  if (messageId != null) return `id:${normalizeId(messageId)}`;
-
-  // Use the saved message contents when the API does not provide an ID.
-  return `message:${JSON.stringify(message)}`;
-};
-
-const mergeMessages = (existingMessages, incomingMessages) => {
-  const messages = [];
-  const seenMessageKeys = new Set();
-
-  // Keep every previously loaded message and append only new messages.
-  [...existingMessages, ...incomingMessages].forEach((message) => {
-    const key = getMessageKey(message);
-    if (seenMessageKeys.has(key)) return;
-
-    seenMessageKeys.add(key);
-    messages.push(message);
-  });
-
-  return messages;
-};
-
-const isAgentMessage = (message) => {
-  if (!message || typeof message !== "object") return false;
-
-  // Explicit flags take priority over the sender's role.
-  if (typeof message.isAgent === "boolean") return message.isAgent;
-  if (message.isCustomer === true) return false;
-
-  // Messages may store the sender role in different fields depending on the API response.
-  const sender = message.sender;
-  let role = message.senderType ?? message.senderRole ?? message.role;
-
-  if (role == null) {
-    const senderId = message.senderId;
-    const senderDetails =
-      typeof sender === "object" && sender !== null
-        ? sender
-        : typeof senderId === "object" && senderId !== null
-          ? senderId
-          : null;
-
-    if (typeof sender === "string") {
-      role = sender;
-    } else {
-      role = senderDetails?.role ?? senderDetails?.type;
-    }
-  }
-
-  if (role == null) role = message.direction;
-  if (typeof role !== "string") return false;
-
-  const normalizedRole = role.trim().toLowerCase();
-  return normalizedRole === "agent" || normalizedRole === "admin";
-};
-
-const ChatWindow = ({
-  selectedConversation: selectedConversationProp,
-  onConversationData,
-}) => {
+const ChatWindow = ({ selectedConversation: conversationProp, onConversationData }) => {
+  const { token, user } = useAuth();
   const conversationContext = useConversation();
   const navigate = useNavigate();
   const { id: routeConversationId } = useParams();
 
-  // Use the conversation passed by the list, or fall back to shared context.
+  // Use the selected conversation from props, or shared context.
   const selectedConversation =
-    selectedConversationProp ?? conversationContext?.selectedConversation;
-  const selectedConversationId = normalizeId(
-    routeConversationId ??
-      selectedConversation?._id ??
-      selectedConversation?.id,
+    conversationProp ?? conversationContext?.selectedConversation;
+
+  const conversationId = getId(
+    routeConversationId ?? selectedConversation?._id ?? selectedConversation?.id
   );
-  const conversationMessages = useMemo(
-    () => getConversationMessages(selectedConversation),
-    [selectedConversation],
-  );
-  const { token, user } = useAuth();
-  const [messageState, setMessageState] = useState(() => ({
-    conversationId: selectedConversationId,
-    messages: conversationMessages,
-  }));
+
+  const initialMessages = useMemo(() => {
+    if (Array.isArray(selectedConversation?.messages)) {
+      return selectedConversation.messages;
+    }
+    return selectedConversation?.message ? [selectedConversation.message] : [];
+  }, [selectedConversation]);
+
+  const [messageState, setMessageState] = useState({
+    conversationId,
+    messages: initialMessages,
+  });
   const [historyState, setHistoryState] = useState({
     conversationId: "",
     loading: false,
     error: "",
   });
-  const [conversationDetails, setConversationDetails] = useState({
+  const [details, setDetails] = useState({
     conversationId: "",
     customer: null,
     agent: null,
   });
+  const [replyDraft, setReplyDraft] = useState({
+    conversationId,
+    content: "",
+    error: "",
+  });
+  const [replySending, setReplySending] = useState(false);
 
+  const replyContent =
+    replyDraft.conversationId === conversationId ? replyDraft.content : "";
+  const replyError =
+    replyDraft.conversationId === conversationId ? replyDraft.error : "";
+
+  // Load the conversation's message history from the backend.
   useEffect(() => {
-    if (!selectedConversationId) return undefined;
-    if (!token) return undefined;
+    if (!conversationId || !token) return undefined;
 
     const controller = new AbortController();
 
-    const fetchMessages = async () => {
-      console.info("Loading conversation messages from the API.", {
-        conversationId: selectedConversationId,
-      });
+    const loadMessages = async () => {
+      setHistoryState({ conversationId, loading: true, error: "" });
 
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/api/messages?conversationId=${encodeURIComponent(selectedConversationId)}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key": token,
-            },
-            signal: controller.signal,
-          },
-        );
-        const data = await response.json();
+        const data = await fetchConversationMessages({
+          conversationId,
+          token,
+          signal: controller.signal,
+        });
 
-        if (!response.ok) {
-          throw new Error(data?.message || "Failed to load conversation messages.");
-        }
+        const responseData = unwrapData(data);
+        const loadedMessages = getMessages(data);
 
-        const responseData = unwrapResponseData(data);
-        const loadedMessages = getMessagesFromResponse(data);
         if (
           !Array.isArray(data) &&
           !Array.isArray(data?.data) &&
@@ -198,20 +99,8 @@ const ChatWindow = ({
           !data?.data?.message &&
           !data?.data?.conversation?.message
         ) {
-          throw new Error(
-            "The conversation API response did not contain a messages array.",
-          );
+          throw new Error("The conversation API response did not contain messages.");
         }
-
-        console.info("Conversation messages loaded from the API.", {
-          conversationId: selectedConversationId,
-          count: loadedMessages.length,
-          customerName:
-            responseData?.customer?.name ??
-            responseData?.conversation?.customer?.name ??
-            responseData?.conversation?.customerId?.name ??
-            null,
-        });
 
         const customer =
           responseData?.customer ??
@@ -219,41 +108,31 @@ const ChatWindow = ({
           (typeof responseData?.conversation?.customerId === "object"
             ? responseData.conversation.customerId
             : null);
+
         const agent =
           responseData?.agent ??
           responseData?.conversation?.assignedAgent ??
           responseData?.conversation?.agent ??
           responseData?.conversation?.assignedAgentId ??
           null;
-        setConversationDetails({
-          conversationId: selectedConversationId,
-          customer,
-          agent,
-        });
-        onConversationData?.(selectedConversationId, { customer, agent });
 
+        setDetails({ conversationId, customer, agent });
+        onConversationData?.(conversationId, { customer, agent });
+
+        // Merge API history with messages already received from Socket.IO.
         setMessageState((previous) => ({
-          conversationId: selectedConversationId,
+          conversationId,
           messages: mergeMessages(
             loadedMessages,
-            previous.conversationId === selectedConversationId
-              ? previous.messages
-              : [],
+            previous.conversationId === conversationId ? previous.messages : []
           ),
         }));
-        setHistoryState({
-          conversationId: selectedConversationId,
-          loading: false,
-          error: "",
-        });
+
+        setHistoryState({ conversationId, loading: false, error: "" });
       } catch (error) {
         if (error.name !== "AbortError") {
-          console.error("Failed to load conversation messages.", {
-            conversationId: selectedConversationId,
-            error,
-          });
           setHistoryState({
-            conversationId: selectedConversationId,
+            conversationId,
             loading: false,
             error: error.message || "Failed to load conversation messages.",
           });
@@ -261,23 +140,19 @@ const ChatWindow = ({
       }
     };
 
-    fetchMessages();
-
+    loadMessages();
     return () => controller.abort();
-  }, [onConversationData, selectedConversationId, token]);
+  }, [conversationId, token, onConversationData]);
 
-  // Listen on the shared socket and clean up this listener when the chat changes.
+  // Listen for real-time messages from Socket.IO.
   useEffect(() => {
+    if (!conversationId) return undefined;
+
     const socket = getSocket();
-    if (!selectedConversationId) return undefined;
-    if (!socket) {
-      console.warn("Cannot receive chat messages: Socket.IO is not initialized.");
-      return undefined;
-    }
+    if (!socket) return undefined;
 
     const handleNewMessage = (event) => {
-      const payload = unwrapEventData(event);
-      console.info("Received new_message event in ChatWindow.", payload);
+      const payload = unwrapEvent(event);
       const incomingMessage =
         payload?.message ??
         payload?.savedMessage ??
@@ -285,6 +160,7 @@ const ChatWindow = ({
         (payload?.conversationId != null || payload?.conversation_id != null
           ? payload
           : null);
+
       const eventConversationId =
         payload?.conversationId ??
         payload?.conversation_id ??
@@ -294,129 +170,93 @@ const ChatWindow = ({
         incomingMessage?.conversationId ??
         incomingMessage?.conversation_id;
 
-      // Only add messages that belong to the currently selected conversation.
-      if (
-        !incomingMessage ||
-        normalizeId(eventConversationId) !== selectedConversationId
-      ) {
-        console.debug("Ignoring new_message event for another conversation.", {
-          selectedConversationId,
-          eventConversationId: normalizeId(eventConversationId),
-          matches: normalizeId(eventConversationId) === selectedConversationId,
-        });
-        return;
-      }
+      // Ignore events for a different conversation.
+      if (!incomingMessage || getId(eventConversationId) !== conversationId) return;
 
-      console.info("Received a new message for the selected conversation.", {
-        conversationId: selectedConversationId,
-        messageId: normalizeId(
-          incomingMessage?._id ?? incomingMessage?.id ?? incomingMessage?.messageId,
-        ),
-      });
-
-      const eventCustomer =
+      const customer =
         payload?.customer ??
         payload?.conversation?.customer ??
         (typeof payload?.conversation?.customerId === "object"
           ? payload.conversation.customerId
           : null);
-      const eventAgent =
+
+      const agent =
         payload?.agent ??
         payload?.conversation?.assignedAgent ??
         payload?.conversation?.agent ??
         null;
-      if (eventCustomer || eventAgent) {
-        setConversationDetails((previous) => ({
-          conversationId: selectedConversationId,
+
+      if (customer || agent) {
+        setDetails((previous) => ({
+          conversationId,
           customer:
-            eventCustomer ||
-            (previous.conversationId === selectedConversationId
-              ? previous.customer
-              : null),
+            customer ||
+            (previous.conversationId === conversationId ? previous.customer : null),
           agent:
-            eventAgent ||
-            (previous.conversationId === selectedConversationId
-              ? previous.agent
-              : null),
+            agent ||
+            (previous.conversationId === conversationId ? previous.agent : null),
         }));
       }
-      onConversationData?.(selectedConversationId, {
-        customer: eventCustomer,
-        agent: eventAgent,
-      });
 
-      setMessageState((previous) => {
-        const sameConversation =
-          previous.conversationId === selectedConversationId;
-        const messages = mergeMessages(
-          sameConversation
-            ? mergeMessages(conversationMessages, previous.messages)
-            : conversationMessages,
-          [incomingMessage],
-        );
-        console.info("Added incoming message to ChatWindow state.", {
-          conversationId: selectedConversationId,
-          messageId: normalizeId(
-            incomingMessage?._id ??
-              incomingMessage?.id ??
-              incomingMessage?.messageId,
-          ),
-          messageCount: messages.length,
-        });
+      onConversationData?.(conversationId, { customer, agent });
 
-        return {
-          conversationId: selectedConversationId,
-          messages,
-        };
-      });
+      setMessageState((previous) => ({
+        conversationId,
+        messages: mergeMessages(
+          previous.conversationId === conversationId
+            ? previous.messages
+            : initialMessages,
+          [incomingMessage]
+        ),
+      }));
     };
 
     socket.on("new_message", handleNewMessage);
+    return () => socket.off("new_message", handleNewMessage);
+  }, [conversationId, initialMessages, onConversationData]);
 
-    return () => {
-      socket.off("new_message", handleNewMessage);
-    };
-  }, [conversationMessages, onConversationData, selectedConversationId]);
-
-  // Combine loaded history with live messages without resetting either source.
+  // Combine conversation messages with API and live messages.
   const messages =
-    messageState.conversationId === selectedConversationId
-      ? mergeMessages(conversationMessages, messageState.messages)
-      : conversationMessages;
-  const historyStateMatchesConversation =
-    historyState.conversationId === selectedConversationId;
+    messageState.conversationId === conversationId
+      ? mergeMessages(initialMessages, messageState.messages)
+      : initialMessages;
+
+  const historyMatches = historyState.conversationId === conversationId;
   const historyLoading =
-    Boolean(selectedConversationId) &&
+    Boolean(conversationId) &&
     Boolean(token) &&
-    (!historyStateMatchesConversation || historyState.loading);
-  const historyError = historyStateMatchesConversation
+    (!historyMatches || historyState.loading);
+  const historyError = historyMatches
     ? historyState.error
     : token
       ? ""
       : "Your session is unavailable. Please log in again.";
-  const loadedConversationDetails =
-    conversationDetails.conversationId === selectedConversationId
-      ? conversationDetails
-      : {};
+
+  const loadedDetails =
+    details.conversationId === conversationId ? details : {};
+
   const customer =
-    loadedConversationDetails.customer ??
+    loadedDetails.customer ??
     selectedConversation?.customer ??
     (typeof selectedConversation?.customerId === "object"
       ? selectedConversation.customerId
       : null);
+
   const agent =
-    loadedConversationDetails.agent ??
+    loadedDetails.agent ??
     selectedConversation?.assignedAgent ??
     selectedConversation?.agent ??
     (typeof selectedConversation?.agentId === "object"
       ? selectedConversation.agentId
       : null);
+
   const customerId =
     customer?._id ??
     customer?.id ??
     selectedConversation?.customerId?._id ??
     selectedConversation?.customerId?.id ??
     selectedConversation?.customerId;
+
   const agentId =
     agent?._id ??
     agent?.id ??
@@ -426,12 +266,14 @@ const ChatWindow = ({
     user?._id ??
     user?.id ??
     user?.userId;
+
   const customerName =
     customer?.name ??
     customer?.fullName ??
     customer?.displayName ??
     selectedConversation?.customerName ??
     selectedConversation?.name;
+
   const agentName =
     agent?.name ??
     agent?.fullName ??
@@ -441,57 +283,98 @@ const ChatWindow = ({
     user?.fullName ??
     user?.displayName;
 
-  useEffect(() => {
-    console.info("Selected conversation details for ChatHeader.", {
-      conversationId: selectedConversationId,
-      customerName: customerName || null,
-    });
-  }, [customerName, selectedConversationId]);
+  // Send a reply to the selected conversation.
+  const sendReply = async (event) => {
+    event.preventDefault();
+
+    const content = replyContent.trim();
+    if (!content || !conversationId || !token || replySending) return;
+
+    setReplySending(true);
+    setReplyDraft({ conversationId, content: replyContent, error: "" });
+
+    try {
+      const savedMessage = await postAgentReply({
+        conversationId,
+        content,
+        token,
+      });
+
+      // Add the saved message immediately; the socket event may also arrive.
+      setMessageState((previous) => ({
+        conversationId,
+        messages: mergeMessages(
+          previous.conversationId === conversationId
+            ? previous.messages
+            : initialMessages,
+          [savedMessage]
+        ),
+      }));
+
+      setReplyDraft({ conversationId, content: "", error: "" });
+    } catch (error) {
+      setReplyDraft({
+        conversationId,
+        content: replyContent,
+        error: error.message || "Failed to send reply.",
+      });
+    } finally {
+      setReplySending(false);
+    }
+  };
 
   return (
     <section className="content-area conversation-chat-window">
       <ChatHeader
         name={
           customerName ||
-          (selectedConversationId ? "Customer name unavailable" : "Select a conversation")
+          (conversationId ? "Customer name unavailable" : "Select a conversation")
         }
         avatar={selectedConversation?.avatar}
         onBack={() => navigate("/conversations")}
       />
+
       <div className="content-area-body conversation-messages">
-        {/* Show an empty-state message when there are no messages to display. */}
         {messages.length === 0 ? (
           <div className="conversation-empty-state">
             {historyLoading
               ? "Loading messages..."
               : historyError
                 ? historyError
-                : selectedConversationId
+                : conversationId
                   ? "No messages yet."
                   : "Select a conversation to view messages."}
           </div>
         ) : (
-          messages.map((message, index) => {
-            const isAgent = isAgentMessage(message);
-
-            return (
-              <MessageItem
-                key={`${selectedConversationId || "conversation"}-${getMessageKey(message) || index}`}
-                message={message}
-                customerName={customerName}
-                customerId={customerId}
-                agentName={agentName}
-                agentId={agentId}
-                avatar={
-                  isAgent ? undefined : selectedConversation?.avatar
-                }
-                isAgent={isAgent}
-              />
-            );
-          })
+          messages.map((message, index) => (
+            <MessageItem
+              key={`${conversationId || "conversation"}-${getMessageKey(message) || index}`}
+              message={message}
+              customerName={customerName}
+              customerId={customerId}
+              agentName={agentName}
+              agentId={agentId}
+              avatar={isAgentMessage(message) ? undefined : selectedConversation?.avatar}
+              isAgent={isAgentMessage(message)}
+            />
+          ))
         )}
       </div>
-      <MessageEditor />
+
+      <MessageEditor
+        value={replyContent}
+        onChange={(event) =>
+          setReplyDraft({
+            conversationId,
+            content: event.target.value,
+            error: "",
+          })
+        }
+        onSubmit={sendReply}
+        disabled={!conversationId || !token}
+        sending={replySending}
+        error={replyError}
+      />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-  const  ChatHeader = ({ name, avatar, onBack }) => {
+  const ChatHeader = ({ name, onBack }) => {
   console.log("ChatHeader received name:", name);
 
   const displayName =

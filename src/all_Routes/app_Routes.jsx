@@ -13,11 +13,13 @@ import Analytics from "../pages/analytics";
 
 import ConversationList from "../components/ConversationList";
 import Dashboard from "../pages/dashboard";
+import CustomerChat from "../pages/customerChat";
 
 // Public routes
 const publicRoutes = [
   { path: "/", element: <Login /> },
   { path: "/login", element: <Login /> },
+  { path: "/chat", element: <CustomerChat /> },
 ];
 
 // Protected page routes
