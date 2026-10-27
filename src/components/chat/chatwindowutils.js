@@ -1,21 +1,14 @@
+
 // Utility functions used by ChatWindow and its child components.
-import {
-  getId,
-  getMessages,
-  unwrapData,
-  unwrapEvent,
-  getMessageKey,
-  mergeMessages,
-  isAgentMessage,
-} from "../chat/chatwindow_Service"
 
 // Get an ID whether MongoDB returns an object or a plain ID.
 export const getId = (value) => {
   if (value == null) return "";
+
   return String(value?._id ?? value?.id ?? value);
 };
 
-// Get messages from the different response shapes used by the API.
+// Get messages from different API response formats.
 export const getMessages = (data) => {
   if (Array.isArray(data)) return data;
   if (Array.isArray(data?.data)) return data.data;
@@ -38,40 +31,51 @@ export const getMessages = (data) => {
   return single ? [single] : [];
 };
 
-// Some API responses wrap the actual data inside `data`.
-export const unwrapData = (data) =>
-  data?.data && typeof data.data === "object" ? data.data : data;
+// Get actual data if the API response is wrapped inside `data`.
+export const unwrapData = (data) => {
+  return data?.data && typeof data.data === "object"
+    ? data.data
+    : data;
+};
 
-// Socket events can also be wrapped inside `data`.
+// Handle Socket.IO events that may be wrapped inside `data`.
 export const unwrapEvent = (event) => {
   let data = event;
 
   for (let i = 0; i < 2; i += 1) {
-    if (!data?.data || typeof data.data !== "object") break;
+    if (!data?.data || typeof data.data !== "object") {
+      break;
+    }
+
     data = data.data;
   }
 
   return data;
 };
 
-// Create a unique key so the same message is not added twice.
+// Create a unique key for each message.
 export const getMessageKey = (message) => {
   if (message == null || typeof message !== "object") {
     return String(message);
   }
 
   const id = message._id ?? message.id ?? message.messageId;
-  return id != null ? `id:${getId(id)}` : `message:${JSON.stringify(message)}`;
+
+  return id != null
+    ? `id:${getId(id)}`
+    : `message:${JSON.stringify(message)}`;
 };
 
-// Keep old messages and add only messages that are not already present.
+// Merge message lists without adding duplicate messages.
 export const mergeMessages = (...groups) => {
   const result = [];
   const seen = new Set();
 
   groups.flat().forEach((message) => {
     const key = getMessageKey(message);
+
     if (seen.has(key)) return;
+
     seen.add(key);
     result.push(message);
   });
@@ -79,10 +83,14 @@ export const mergeMessages = (...groups) => {
   return result;
 };
 
-// Decide whether a message was sent by an agent or admin.
+// Check whether a message was sent by an agent or admin.
 export const isAgentMessage = (message) => {
   if (!message || typeof message !== "object") return false;
-  if (typeof message.isAgent === "boolean") return message.isAgent;
+
+  if (typeof message.isAgent === "boolean") {
+    return message.isAgent;
+  }
+
   if (message.isCustomer === true) return false;
 
   const sender =
@@ -102,5 +110,6 @@ export const isAgentMessage = (message) => {
     message.direction;
 
   if (typeof role !== "string") return false;
+
   return ["agent", "admin"].includes(role.trim().toLowerCase());
 };

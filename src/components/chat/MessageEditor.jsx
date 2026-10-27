@@ -9,19 +9,17 @@ const MessageEditor = ({
 }) => {
   return (
     <footer className="content-area-footer conversation-composer">
-      <form
-        className="conversation-composer-form"
-        onSubmit={onSubmit}
-      >
-        <textarea
+      <form className="conversation-composer-form" onSubmit={onSubmit}>
+        <input
+          type="text"
           className="form-control conversation-composer-input"
-          rows="1"
           placeholder="Type your message..."
           aria-label="Type your message"
           value={value}
           onChange={onChange}
           disabled={disabled || sending}
         />
+
         <button
           type="submit"
           className="btn btn-primary conversation-composer-send"

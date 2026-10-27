@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import ProtectedRoutes from "../auth/protected_Routes";
+import ProtectedRoutes from "../auth/protectedroutes"
+
 
 import Login from "../auth/login";
 import MainLayout from "../layouts/mainlayout";

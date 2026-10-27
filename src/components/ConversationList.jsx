@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../auth/auth_Context";
+import { useAuth } from "../auth/authcontext";
 import avatar10 from "../assets copy/images/avatar/10.png";
 import ChatWindow from "./ChatWindow";
 import { getSocket } from "../sockets/socket";
 import {
   formatMessageTimestamp,
   getMessageTimestamp,
-} from "./chat/messageFormat";
+} from "./chat/messageformat";
 
 const normalizeId = (value) => {
   if (value == null) return "";

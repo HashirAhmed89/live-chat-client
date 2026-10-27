@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { useAuth } from "../auth/auth_Context";
-import { useConversation } from "../conversation_Context/conversationcontext";
+import { useAuth } from "../auth/authcontext";
+import { useConversation } from "../conversationcontext/conversationcontext";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSocket } from "../sockets/socket";
-import ChatHeader from "../components/chat/ChatHeader";
-import MessageEditor from "./chat/MessageEditor";
-import MessageItem from "./chat/MessageItem";
+import ChatHeader from "./chat/ChatHeader";
+import MessageEditor from "./chat/messageeditor";
+import MessageItem from "./chat/messageitem";
 import {
   getId,
   getMessages,
@@ -14,11 +14,12 @@ import {
   getMessageKey,
   mergeMessages,
   isAgentMessage,
-} from "./utils/chatWindow.utils";
+} from "./chat/chatwindowutils";
+
 import {
   fetchConversationMessages,
   postAgentReply,
-} from "./services/chatWindow.service";
+} from "./chat/chatwindowservice";
 
 const ChatWindow = ({ selectedConversation: conversationProp, onConversationData }) => {
   const { token, user } = useAuth();

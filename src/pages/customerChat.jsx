@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import MessageEditor from "../components/chat/MessageEditor";
-import MessageItem from "../components/chat/MessageItem";
+import MessageEditor from "../components/chat/messageeditor";
+import MessageItem from "../components/chat/messageitem";
 import {
   connectCustomerSocket,
   disconnectCustomerSocket,

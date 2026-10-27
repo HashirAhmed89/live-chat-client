@@ -3,7 +3,7 @@ import {
   formatMessageTimestamp,
   getMessageSenderName,
   getMessageTimestamp,
-} from "./messageFormat";
+} from "./messageformat";
 
 const MessageItem = ({
   message,

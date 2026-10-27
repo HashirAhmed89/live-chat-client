@@ -1,7 +1,7 @@
-import App_Routes from "./all_Routes/app_Routes"
+import App_Routes from "../src/Routes/route"
 import { BrowserRouter } from "react-router-dom"
-import { AuthProvider } from "./auth/auth_Context"
-import { ConversationProvider } from "./conversation_Context/conversationcontext"
+import { AuthProvider } from "./auth/authcontext"
+import { ConversationProvider } from "./conversationcontext/conversationcontext"
 
 function App() {
   return (

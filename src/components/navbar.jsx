@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
-import { useAuth } from "../auth/auth_Context";
+import { useAuth } from "../auth/authcontext";
 
 const Navbar = ({ isSidebarOpen, onSidebarToggle }) => {
   const { user, logout } = useAuth();
