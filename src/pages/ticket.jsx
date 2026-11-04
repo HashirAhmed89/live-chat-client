@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../auth/authcontext';
 import {
+  assignTicket as saveTicketAssignment,
+  fetchAgents,
   fetchTicketById,
   fetchTickets,
   updateTicketPriority as saveTicketPriority,
@@ -201,6 +203,12 @@ const Ticket = () => {
   const [statusMessage, setStatusMessage] = useState(null);
   const [priorityUpdating, setPriorityUpdating] = useState(false);
   const [priorityMessage, setPriorityMessage] = useState(null);
+  const [agents, setAgents] = useState([]);
+  const [agentsLoading, setAgentsLoading] = useState(false);
+  const [agentsError, setAgentsError] = useState('');
+  const [selectedAgentId, setSelectedAgentId] = useState('');
+  const [assignmentUpdating, setAssignmentUpdating] = useState(false);
+  const [assignmentMessage, setAssignmentMessage] = useState(null);
   const role = String(user?.role || user?.userRole || user?.type || '')
     .trim()
     .toLowerCase();
@@ -210,6 +218,124 @@ const Ticket = () => {
     (role === 'agent' &&
       Boolean(agentId) &&
       normalizeId(getTicketAssigneeId(ticketDetails)) === agentId);
+
+  // Load assignment options only for admins.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadAgents = async () => {
+      if (role !== 'admin' || !token) {
+        setAgents([]);
+        setAgentsError('');
+        setAgentsLoading(false);
+        return;
+      }
+
+      setAgentsLoading(true);
+      setAgentsError('');
+      setAgents([]);
+
+      try {
+        setAgents(await fetchAgents({ token, signal: controller.signal }));
+      } catch (loadError) {
+        if (loadError.name !== 'AbortError') {
+          console.error('Failed to load agents.', loadError);
+          setAgentsError(loadError.message || 'Failed to load agents.');
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setAgentsLoading(false);
+        }
+      }
+    };
+
+    loadAgents();
+    return () => controller.abort();
+  }, [role, token]);
+
+  // Assign the selected agent, update local ticket state, and refresh its details.
+  const handleTicketAssignment = async () => {
+    if (role !== 'admin') {
+      setAssignmentMessage({
+        type: 'error',
+        text: 'Only admins can assign tickets.',
+      });
+      return;
+    }
+
+    if (!token || !selectedTicketId || !selectedAgentId) {
+      setAssignmentMessage({
+        type: 'error',
+        text: 'Select an agent before assigning this ticket.',
+      });
+      return;
+    }
+
+    setAssignmentUpdating(true);
+    setAssignmentMessage(null);
+
+    try {
+      const response = await saveTicketAssignment({
+        ticketId: selectedTicketId,
+        agentId: selectedAgentId,
+        token,
+      });
+      const assignedTicket = getTicketDetailsObject(response);
+      setTicketDetails((currentTicket) => ({
+        ...currentTicket,
+        ...assignedTicket,
+      }));
+      setSelectedAgentId(
+        getTicketAssigneeId(assignedTicket) || selectedAgentId,
+      );
+      setTickets((currentTickets) =>
+        currentTickets.map((ticket) =>
+          normalizeId(ticket?._id ?? ticket?.id ?? ticket?.ticketId) ===
+          selectedTicketId
+            ? { ...ticket, ...assignedTicket }
+            : ticket,
+        ),
+      );
+      setAssignmentMessage({
+        type: 'success',
+        text: response.message || 'Ticket assigned successfully.',
+      });
+
+      try {
+        const refreshedData = await fetchTicketById({
+          ticketId: selectedTicketId,
+          token,
+        });
+        const refreshedTicket = getTicketDetailsObject(refreshedData);
+        setTicketDetails(refreshedTicket);
+        setSelectedAgentId(getTicketAssigneeId(refreshedTicket) || selectedAgentId);
+        setTickets((currentTickets) =>
+          currentTickets.map((ticket) =>
+            normalizeId(ticket?._id ?? ticket?.id ?? ticket?.ticketId) ===
+            selectedTicketId
+              ? { ...ticket, ...refreshedTicket }
+              : ticket,
+          ),
+        );
+      } catch (refreshError) {
+        console.error('Ticket was assigned, but refreshing its details failed.', refreshError);
+        setAssignmentMessage({
+          type: 'error',
+          text: `Ticket was assigned, but its details could not be refreshed: ${
+            refreshError.message || 'Please reload the ticket.'
+          }`,
+        });
+      }
+    } catch (assignError) {
+      console.error('Failed to assign ticket.', assignError);
+      setAssignmentMessage({
+        type: 'error',
+        text: assignError.message || 'Failed to assign ticket.',
+      });
+    } finally {
+      setAssignmentUpdating(false);
+    }
+  };
 
   const handleTicketStatusChange = async (event) => {
     const status = event.target.value;
@@ -396,6 +522,8 @@ const Ticket = () => {
       setDetailsLoading(false);
       setStatusMessage(null);
       setPriorityMessage(null);
+      setAssignmentMessage(null);
+      setSelectedAgentId('');
 
       if (role !== 'admin' && role !== 'agent') {
         setDetailsError('Your account does not have permission to view tickets.');
@@ -423,6 +551,7 @@ const Ticket = () => {
           return;
         }
         setTicketDetails(ticket);
+        setSelectedAgentId(getTicketAssigneeId(ticket));
       } catch (loadError) {
         if (loadError.name !== 'AbortError') {
           console.error('Failed to load ticket details.', loadError);
@@ -1011,6 +1140,64 @@ const Ticket = () => {
                               )}
                             </div>
                           </div>
+                          {role === 'admin' && (
+                            <div>
+                              <label
+                                className="form-label fs-12 mb-1"
+                                htmlFor="ticket-agent"
+                              >
+                                Assign Agent
+                              </label>
+                              {agentsLoading ? (
+                                <div role="status">Loading agents...</div>
+                              ) : agentsError ? (
+                                <div className="alert alert-danger py-2 px-3 mb-2" role="alert">
+                                  {agentsError}
+                                </div>
+                              ) : agents.length === 0 ? (
+                                <div className="text-muted">
+                                  No agents are available to assign.
+                                </div>
+                              ) : (
+                                <div className="d-flex flex-wrap gap-2">
+                                  <select
+                                    id="ticket-agent"
+                                    className="form-select"
+                                    value={selectedAgentId}
+                                    onChange={(event) =>
+                                      setSelectedAgentId(event.target.value)
+                                    }
+                                    disabled={assignmentUpdating}
+                                  >
+                                    <option value="" disabled>
+                                      Select an agent
+                                    </option>
+                                    {agents.map((agent) => (
+                                      <option key={agent._id} value={agent._id}>
+                                        {agent.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleTicketAssignment}
+                                    disabled={assignmentUpdating || !selectedAgentId}
+                                  >
+                                    {assignmentUpdating ? 'Assigning...' : 'Assign'}
+                                  </button>
+                                </div>
+                              )}
+                              {assignmentMessage && (
+                                <div
+                                  className={`alert ${assignmentMessage.type === 'success' ? 'alert-success' : 'alert-danger'} py-2 px-3 mt-2 mb-0`}
+                                  role={assignmentMessage.type === 'error' ? 'alert' : 'status'}
+                                >
+                                  {assignmentMessage.text}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       ) : null}
                     </div>

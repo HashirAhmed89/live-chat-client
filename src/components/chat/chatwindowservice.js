@@ -25,6 +25,41 @@ export const fetchTickets = async ({ token, signal }) => {
   return data;
 };
 
+// Fetch the available agents for ticket assignment.
+export const fetchAgents = async ({ token, signal }) => {
+  const response = await fetch(
+    `${API_BASE_URL.replace(/\/$/, "")}/api/getAllAgents`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": token,
+      },
+      signal,
+    },
+  );
+
+  const responseBody = await response.text();
+  let data = null;
+
+  if (responseBody) {
+    try {
+      data = JSON.parse(responseBody);
+    } catch {
+      data = { message: responseBody };
+    }
+  }
+
+  if (!response.ok || data?.success === false) {
+    throw new Error(data?.message || "Failed to load agents.");
+  }
+
+  if (!Array.isArray(data?.data)) {
+    throw new Error("The server did not return a valid agent list.");
+  }
+
+  return data.data;
+};
+
 // Load one ticket by ID for the authenticated user.
 export const fetchTicketById = async ({ ticketId, token, signal }) => {
   if (!ticketId || !String(ticketId).trim()) {
@@ -55,6 +90,50 @@ export const fetchTicketById = async ({ ticketId, token, signal }) => {
 
   if (!response.ok) {
     throw new Error(data?.message || "Failed to load ticket details.");
+  }
+
+  return data;
+};
+
+// Assign a ticket to the selected agent.
+export const assignTicket = async ({ ticketId, agentId, token }) => {
+  if (!ticketId || !String(ticketId).trim()) {
+    throw new Error("A valid ticket ID is required.");
+  }
+
+  if (!agentId || !String(agentId).trim()) {
+    throw new Error("A valid agent is required.");
+  }
+
+  const response = await fetch(
+    `${API_BASE_URL.replace(/\/$/, "")}/api/assignTicket/${encodeURIComponent(String(ticketId).trim())}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": token,
+      },
+      body: JSON.stringify({ agentId }),
+    },
+  );
+
+  const responseBody = await response.text();
+  let data = null;
+
+  if (responseBody) {
+    try {
+      data = JSON.parse(responseBody);
+    } catch {
+      data = { message: responseBody };
+    }
+  }
+
+  if (!response.ok || data?.success === false) {
+    throw new Error(data?.message || "Failed to assign ticket.");
+  }
+
+  if (!data?.data || typeof data.data !== "object") {
+    throw new Error("The server did not return the updated ticket.");
   }
 
   return data;
