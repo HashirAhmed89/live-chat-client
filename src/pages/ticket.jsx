@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../auth/authcontext';
 import {
   assignTicket as saveTicketAssignment,
+  deleteTicket as removeTicket,
   fetchAgents,
   fetchTicketById,
   fetchTickets,
@@ -209,6 +210,9 @@ const Ticket = () => {
   const [selectedAgentId, setSelectedAgentId] = useState('');
   const [assignmentUpdating, setAssignmentUpdating] = useState(false);
   const [assignmentMessage, setAssignmentMessage] = useState(null);
+  const assignmentInProgress = useRef(false);
+  const [deletingTicketId, setDeletingTicketId] = useState('');
+  const [deleteMessage, setDeleteMessage] = useState(null);
   const role = String(user?.role || user?.userRole || user?.type || '')
     .trim()
     .toLowerCase();
@@ -218,6 +222,49 @@ const Ticket = () => {
     (role === 'agent' &&
       Boolean(agentId) &&
       normalizeId(getTicketAssigneeId(ticketDetails)) === agentId);
+
+  // Confirm and delete a ticket, then remove it from the visible list.
+  const handleDeleteTicket = async (ticketId, title) => {
+    if (role !== 'admin') {
+      setDeleteMessage({
+        type: 'error',
+        text: 'Only admins can delete tickets.',
+      });
+      return;
+    }
+
+    if (!token || !ticketId || deletingTicketId) return;
+
+    if (!window.confirm(`Delete "${title}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    setDeletingTicketId(ticketId);
+    setDeleteMessage(null);
+
+    try {
+      const response = await removeTicket({ ticketId, token });
+      setTickets((currentTickets) =>
+        currentTickets.filter(
+          (ticket) =>
+            normalizeId(ticket?._id ?? ticket?.id ?? ticket?.ticketId) !==
+            ticketId,
+        ),
+      );
+      setDeleteMessage({
+        type: 'success',
+        text: response?.message || 'Ticket deleted successfully.',
+      });
+    } catch (deleteError) {
+      console.error('Failed to delete ticket.', deleteError);
+      setDeleteMessage({
+        type: 'error',
+        text: deleteError.message || 'Failed to delete ticket.',
+      });
+    } finally {
+      setDeletingTicketId('');
+    }
+  };
 
   // Load assignment options only for admins.
   useEffect(() => {
@@ -271,6 +318,8 @@ const Ticket = () => {
       return;
     }
 
+    if (assignmentInProgress.current) return;
+    assignmentInProgress.current = true;
     setAssignmentUpdating(true);
     setAssignmentMessage(null);
 
@@ -280,7 +329,15 @@ const Ticket = () => {
         agentId: selectedAgentId,
         token,
       });
-      const assignedTicket = getTicketDetailsObject(response);
+      const assignedAgent = agents.find(
+        (agent) => normalizeId(agent._id) === selectedAgentId,
+      );
+      setAssignmentMessage({
+        type: 'success',
+        text: `Ticket assigned successfully to ${assignedAgent?.name || 'the selected agent'}.`,
+      });
+
+      const assignedTicket = response.data;
       setTicketDetails((currentTicket) => ({
         ...currentTicket,
         ...assignedTicket,
@@ -296,10 +353,6 @@ const Ticket = () => {
             : ticket,
         ),
       );
-      setAssignmentMessage({
-        type: 'success',
-        text: response.message || 'Ticket assigned successfully.',
-      });
 
       try {
         const refreshedData = await fetchTicketById({
@@ -319,12 +372,6 @@ const Ticket = () => {
         );
       } catch (refreshError) {
         console.error('Ticket was assigned, but refreshing its details failed.', refreshError);
-        setAssignmentMessage({
-          type: 'error',
-          text: `Ticket was assigned, but its details could not be refreshed: ${
-            refreshError.message || 'Please reload the ticket.'
-          }`,
-        });
       }
     } catch (assignError) {
       console.error('Failed to assign ticket.', assignError);
@@ -333,6 +380,7 @@ const Ticket = () => {
         text: assignError.message || 'Failed to assign ticket.',
       });
     } finally {
+      assignmentInProgress.current = false;
       setAssignmentUpdating(false);
     }
   };
@@ -928,6 +976,14 @@ const Ticket = () => {
 
               {/* Tickets list */}
               <div className="content-area-body">
+                {deleteMessage && (
+                  <div
+                    className={`alert ${deleteMessage.type === 'success' ? 'alert-success' : 'alert-danger'}`}
+                    role={deleteMessage.type === 'error' ? 'alert' : 'status'}
+                  >
+                    {deleteMessage.text}
+                  </div>
+                )}
                 {showTicketDetails ? (
                   <div className="card stretch stretch-full">
                     <div className="card-header d-flex align-items-center justify-content-between">
@@ -1290,6 +1346,40 @@ const Ticket = () => {
                                   <div className="d-md-inline-block d-none me-3">
                                     {getTicketDate(ticket)}
                                   </div>
+                                  {role === 'admin' && (
+                                    <div className="dropdown">
+                                      <button
+                                        type="button"
+                                        className="avatar-text avatar-md"
+                                        data-bs-toggle="dropdown"
+                                        aria-label={`Actions for ${title}`}
+                                        disabled={deletingTicketId === ticketId}
+                                      >
+                                        {deletingTicketId === ticketId ? (
+                                          <span className="fs-10">...</span>
+                                        ) : (
+                                          <i className="feather-more-vertical"></i>
+                                        )}
+                                      </button>
+                                      <div className="dropdown-menu dropdown-menu-end">
+                                        <button
+                                          type="button"
+                                          className="dropdown-item text-danger"
+                                          disabled={Boolean(deletingTicketId)}
+                                          onClick={() =>
+                                            handleDeleteTicket(ticketId, title)
+                                          }
+                                        >
+                                          <i className="feather-trash-2 me-3"></i>
+                                          <span>
+                                            {deletingTicketId === ticketId
+                                              ? 'Deleting...'
+                                              : 'Delete ticket'}
+                                          </span>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </li>

@@ -95,6 +95,41 @@ export const fetchTicketById = async ({ ticketId, token, signal }) => {
   return data;
 };
 
+// Delete one ticket using the authenticated user's token.
+export const deleteTicket = async ({ ticketId, token }) => {
+  if (!ticketId || !String(ticketId).trim()) {
+    throw new Error("A valid ticket ID is required.");
+  }
+
+  const response = await fetch(
+    `${API_BASE_URL.replace(/\/$/, "")}/api/getTickets/${encodeURIComponent(String(ticketId).trim())}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": token,
+      },
+    },
+  );
+
+  const responseBody = await response.text();
+  let data = null;
+
+  if (responseBody) {
+    try {
+      data = JSON.parse(responseBody);
+    } catch {
+      data = { message: responseBody };
+    }
+  }
+
+  if (!response.ok || data?.success === false) {
+    throw new Error(data?.message || "Failed to delete ticket.");
+  }
+
+  return data;
+};
+
 // Assign a ticket to the selected agent.
 export const assignTicket = async ({ ticketId, agentId, token }) => {
   if (!ticketId || !String(ticketId).trim()) {
