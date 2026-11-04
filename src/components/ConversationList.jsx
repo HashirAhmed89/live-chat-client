@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/authcontext";
 import avatar10 from "../assets copy/images/avatar/10.png";
@@ -8,6 +9,7 @@ import {
   formatMessageTimestamp,
   getMessageTimestamp,
 } from "./chat/messageformat";
+import { deleteConversation } from "./chat/chatwindowservice";
 
 const normalizeId = (value) => {
   if (value == null) return "";
@@ -156,6 +158,19 @@ const ConversationList = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [conversationToDelete, setConversationToDelete] = useState(null);
+  const [deletingConversationId, setDeletingConversationId] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
+  const deleteInProgress = useRef(false);
+  const menuDropdownRef = useRef(null);
+
+  useEffect(() => {
+    if (!notification) return undefined;
+
+    const timeoutId = window.setTimeout(() => setNotification(null), 5000);
+    return () => window.clearTimeout(timeoutId);
+  }, [notification]);
 
   const handleConversationDetails = useCallback((conversationId, details) => {
     if (!details?.customer || typeof details.customer !== "object") return;
@@ -192,7 +207,53 @@ const ConversationList = () => {
     user?.role || user?.userRole || user?.type || "",
   ).toLowerCase();
 
-  const isAdmin = role === "admin";
+  const isAdmin = role.includes("admin");
+  const canManageConversations = isAdmin || role.includes("agent");
+
+  useEffect(() => {
+    if (openMenuId === null) return undefined;
+
+    const handleOutsideClick = (event) => {
+      if (
+        !event.target.closest(".conversation-list-menu-button") &&
+        !menuDropdownRef.current?.contains(event.target)
+      ) {
+        setOpenMenuId(null);
+        setMenuPosition(null);
+      }
+    };
+
+    document.addEventListener("pointerdown", handleOutsideClick);
+    document.addEventListener("scroll", handleOutsideClick, true);
+    window.addEventListener("resize", handleOutsideClick);
+    return () => {
+      document.removeEventListener("pointerdown", handleOutsideClick);
+      document.removeEventListener("scroll", handleOutsideClick, true);
+      window.removeEventListener("resize", handleOutsideClick);
+    };
+  }, [openMenuId]);
+
+  const toggleConversationMenu = (event, conversationId) => {
+    event.stopPropagation();
+
+    if (normalizeId(openMenuId) === normalizeId(conversationId)) {
+      setOpenMenuId(null);
+      setMenuPosition(null);
+      return;
+    }
+
+    const buttonBounds = event.currentTarget.getBoundingClientRect();
+    const menuHeight = isAdmin ? 88 : 48;
+
+    setOpenMenuId(conversationId);
+    setMenuPosition({
+      right: Math.max(8, window.innerWidth - buttonBounds.right),
+      top: Math.max(
+        8,
+        Math.min(buttonBounds.bottom, window.innerHeight - menuHeight - 8),
+      ),
+    });
+  };
 
   // Backend se conversations fetch karein
   useEffect(() => {
@@ -440,6 +501,53 @@ const ConversationList = () => {
     setOpenMenuId(null);
   };
 
+  const confirmDeleteConversation = async () => {
+    const conversationId = normalizeId(
+      getConversationId(conversationToDelete),
+    );
+
+    if (!conversationId || !token || deleteInProgress.current) return;
+
+    deleteInProgress.current = true;
+    setDeletingConversationId(normalizeId(conversationId));
+
+    try {
+      await deleteConversation({ conversationId, token });
+
+      const normalizedConversationId = normalizeId(conversationId);
+      setConversations((previous) =>
+        previous.filter(
+          (conversation) =>
+            normalizeId(getConversationId(conversation)) !==
+            normalizedConversationId,
+        ),
+      );
+      setConversationDetailsById((previous) => {
+        const remaining = { ...previous };
+        delete remaining[normalizedConversationId];
+        return remaining;
+      });
+      setConversationToDelete(null);
+      setNotification({
+        type: "success",
+        message: "Conversation deleted successfully.",
+      });
+
+      if (normalizeId(id) === normalizedConversationId) {
+        navigate("/conversations", { replace: true });
+      }
+    } catch (deleteError) {
+      console.error("Failed to delete conversation.", deleteError);
+      setNotification({
+        type: "danger",
+        message: deleteError.message || "Failed to delete conversation.",
+      });
+    } finally {
+      deleteInProgress.current = false;
+      setDeletingConversationId(null);
+    }
+  };
+
   // Selected conversation hasil karein
   const selectedConversation = conversationsWithDetails.find(
     (conversation) =>
@@ -553,64 +661,70 @@ const ConversationList = () => {
                       </div>
                     </div>
 
-                    {/* Three-dot menu sirf admin ko show hoga */}
-                    {isAdmin && (
-                      <div className="position-relative">
+                    {/* Conversation actions are available to admins and agents. */}
+                    {canManageConversations && (
+                      <div
+                        className="position-relative"
+                        onClick={(event) => event.stopPropagation()}
+                      >
                         <button
                           type="button"
-                          className="btn btn-sm btn-light"
-                          onClick={(event) => {
-                            event.stopPropagation();
-
-                            setOpenMenuId(
-                              openMenuId === conversationId
-                                ? null
-                                : conversationId,
-                            );
-                          }}
+                          className="btn btn-sm btn-light conversation-list-menu-button"
+                          aria-label={`Actions for ${customerName}`}
+                          aria-expanded={
+                            normalizeId(openMenuId) === normalizeId(conversationId)
+                          }
+                          onClick={(event) =>
+                            toggleConversationMenu(event, conversationId)
+                          }
                         >
-                          <i className="feather-more-vertical" />
+                          <span aria-hidden="true">⋮</span>
                         </button>
+                      </div>
+                    )}
 
-                        {/* Dropdown menu */}
-                        {normalizeId(openMenuId) ===
-                          normalizeId(conversationId) && (
-                          <div
-                            className="dropdown-menu show"
-                            style={{
-                              position: "absolute",
-                              right: 0,
-                              top: "100%",
-                              zIndex: 1000,
-                            }}
-                          >
+                    {normalizeId(openMenuId) ===
+                      normalizeId(conversationId) &&
+                      menuPosition &&
+                      createPortal(
+                        <div
+                          ref={menuDropdownRef}
+                          className="dropdown-menu show conversation-list-actions-menu"
+                          style={{
+                            position: "fixed",
+                            right: menuPosition.right,
+                            top: menuPosition.top,
+                            zIndex: 2000,
+                          }}
+                          onClick={(event) => event.stopPropagation()}
+                        >
+                          {isAdmin && (
                             <button
                               type="button"
                               className="dropdown-item"
                               onClick={() => {
                                 setOpenMenuId(null);
-
-                                // Yahan Assign Chat API connect karni hai
+                                setMenuPosition(null);
                               }}
                             >
                               Assign Chat
                             </button>
+                          )}
 
-                            <button
-                              type="button"
-                              className="dropdown-item text-danger"
-                              onClick={() => {
-                                setOpenMenuId(null);
-
-                                // Yahan Delete Chat API connect karni hai
-                              }}
-                            >
-                              Delete Chat
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                          <button
+                            type="button"
+                            className="dropdown-item text-danger"
+                            onClick={() => {
+                              setOpenMenuId(null);
+                              setMenuPosition(null);
+                              setConversationToDelete(conversation);
+                            }}
+                          >
+                            Delete Conversation
+                          </button>
+                        </div>,
+                        document.body,
+                      )}
                   </div>
                 );
               })
@@ -634,6 +748,69 @@ const ConversationList = () => {
           )}
         </div>
       </div>
+
+      {notification && (
+        <div
+          className={`alert alert-${notification.type} position-fixed top-0 end-0 m-3`}
+          role={notification.type === "danger" ? "alert" : "status"}
+          aria-live="polite"
+          style={{ zIndex: 1100 }}
+        >
+          {notification.message}
+        </div>
+      )}
+
+      {conversationToDelete && (
+        <>
+          <div className="modal-backdrop show" />
+          <div
+            className="modal d-block"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-conversation-title"
+            aria-describedby="delete-conversation-description"
+            style={{ zIndex: 1060 }}
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="delete-conversation-title">
+                    Delete Chat
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    disabled={deletingConversationId !== null}
+                    onClick={() => setConversationToDelete(null)}
+                  />
+                </div>
+                <div className="modal-body" id="delete-conversation-description">
+                  Are you sure you want to delete this conversation?
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    disabled={deletingConversationId !== null}
+                    onClick={() => setConversationToDelete(null)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    disabled={deletingConversationId !== null}
+                    onClick={confirmDeleteConversation}
+                  >
+                    {deletingConversationId !== null ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </main>
   );
 };

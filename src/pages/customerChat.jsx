@@ -22,44 +22,44 @@ const getVisitorId = () => {
 const normalizeId = (value) => {
   if (value == null) return "";
   return String(value?._id ?? value?.id ?? value);
-};
+}
 
 const mergeMessages = (current, incoming) => {
   const byId = new Map();
   [...current, ...incoming].forEach((message, index) => {
-    const id = normalizeId(message?._id ?? message?.id ?? message?.messageId);
+    const id = normalizeId(message?._id ?? message?.id ?? message?.messageId)
     byId.set(id || `message-${index}-${JSON.stringify(message)}`, message);
   });
   return [...byId.values()].sort(
     (left, right) =>
       new Date(left.createdAt || 0).getTime() -
       new Date(right.createdAt || 0).getTime(),
-  );
-};
+  )
+}
 
 const CustomerChat = () => {
   const [visitorId] = useState(getVisitorId);
   const [customerToken, setCustomerToken] = useState(
     () => sessionStorage.getItem("customerChatToken") || "",
-  );
+  )
   const [conversationId, setConversationId] = useState(
     () => sessionStorage.getItem("customerConversationId") || "",
-  );
+  )
   const [customerName, setCustomerName] = useState(
     () => sessionStorage.getItem("customerChatName") || "",
-  );
+  )
   const [email, setEmail] = useState(
-    () => sessionStorage.getItem("customerChatEmail") || "",
-  );
-  const [agentName, setAgentName] = useState("Support");
-  const [messages, setMessages] = useState([]);
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
+      () => sessionStorage.getItem("customerChatEmail") || "",
+  )
+  const [agentName, setAgentName] = useState("Support")
+  const [messages, setMessages] = useState([])
+  const [content, setContent] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState("")
 
   useEffect(() => {
-    if (!customerToken || !conversationId) return undefined;
+    if (!customerToken || !conversationId) return undefined
 
     const controller = new AbortController();
     const socket = connectCustomerSocket(customerToken);

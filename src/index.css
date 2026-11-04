@@ -362,6 +362,24 @@ html.app-skin-dark .agent-table__empty {
   font-size: 10px;
 }
 
+.conversation-list-menu-button {
+  display: inline-flex;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #667085;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.conversation-list-actions-menu {
+  min-width: 190px;
+}
+
 .conversation-chat-column {
   display: flex;
   flex: 1 1 0;
